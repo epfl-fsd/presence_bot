@@ -5,7 +5,8 @@
   "main": "node presence_bot/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon presence_bot/index.js"
+    "start": "node presence_bot/index.js",
+    "dev": "nodemon presence_bot/index.js"
   },
   "repository": {
     "type": "git",
