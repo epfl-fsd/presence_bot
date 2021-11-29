@@ -9,27 +9,21 @@ bot.start((ctx) =>{
     ctx.reply('Welcome my lovely friend')
 });
 
-bot.command("inline", (ctx) => {
-  return ctx.reply("<b>Coke</b> or <i>Pepsi?</i>", {
-    parse_mode: "HTML",
-    ...Markup.inlineKeyboard([
-      Markup.button.callback("Coke", "coke"),
-      Markup.button.callback("Pepsi", "pepsi"),
-    ]),
-  });
-});
-
-
-
 //DATE
 function nextweek(){
-  return nextweek = new Date(today.getDate() +7);
+  date = new Date();
+  date.setDate(date.getDate() + 7);
+  return date;
 }
 function lastweek(){
-  return nextweek = new Date(today.getDate() -7);
+  date = new Date();
+  date.setDate(date.getDate() + 7);
+  return date;
 }
-function currentDate(){
-  return today = new Date();
+function nextMonday() {
+  date=new Date();
+  date.setDate(date.getDate() + 1 + (7-date.getDay())%7);
+  return date;
 }
 
 //INLINE QUERY //MAIN MENU
