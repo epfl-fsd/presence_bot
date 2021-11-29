@@ -1,6 +1,3 @@
-# presence_bot
-a bot that allows the user to know if a team member is in the office or in the home office
-
 # Cahier des charges  
 
 ## Contexte 
@@ -39,4 +36,3 @@ C'est la raison pour laquelle nous avoir eu l'idée de ce bot. Le but étant de 
 
 ## Délais
 **17 Décembre 2021**
-__ 
