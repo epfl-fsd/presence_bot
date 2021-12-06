@@ -1,0 +1,11 @@
+version: "3.3"  # optional since v1.27.0
+services:
+  botpresence:
+    image : botpresence:latest
+    container_name : BotPresence
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - ~/dev
+
