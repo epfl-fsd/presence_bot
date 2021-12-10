@@ -1,5 +1,15 @@
-run :
-Docker-compose up -- build
+build:
+	docker-compose build 
 
-stop :
-docker-compose down
+run:
+	docker run -it botpresence bash
+
+start:
+	docker-compose up --build botpresence
+
+stop:
+	docker stop botpresence:latest
+
+kill:
+	docker kill $$(docker ps)
+
