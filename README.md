@@ -37,3 +37,20 @@ C'est la raison pour laquelle nous avoir eu l'idée de ce bot. Le but étant de 
 
 ## Délais
 **17 Décembre 2021**
+
+# MakeFile 
+
+## build:
+> docker-compose build 
+
+## run:
+> docker run -it botpresence bash
+
+## start:
+> docker-compose up --build botpresence
+
+## stop:
+> docker stop botpresence:latest
+
+## kill:
+> docker kill $$(docker ps)
