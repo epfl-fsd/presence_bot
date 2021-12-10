@@ -4,7 +4,7 @@ const { Markup } = require("telegraf");
 require('dotenv').config();
 const bot = new Telegraf(process.env.BOT_TOKEN)
 
-//
+//Starting the bot
 bot.start((ctx) =>{
     ctx.reply('Welcome my lovely computer scientist')
 });
