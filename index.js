@@ -1,5 +1,9 @@
 const { Telegraf } = require("telegraf");
 const { Markup } = require("telegraf");
+const Menu = require("./Menu");
+var menu = new Menu(
+  "Bienvenue, veuillez indiquer votre présence physique de l'epfl"
+);
 
 require("dotenv").config();
 const bot = new Telegraf(process.env.BOT_TOKEN);
@@ -49,10 +53,7 @@ function nextDay(dayOfTheWeek, week) {
   return date;
 }
 
-//INLINE QUERY //MAIN MENU
-bot.command("test", (ctx) => {
-  ctx.deleteMessage();
-  let startMainMenu = "Bienvenue, veuillez indiquer votre présence physique de l'epfl";
+function weekMenu(){
   bot.telegram.sendMessage(ctx.chat.id, startMainMenu, {
     reply_markup: {
       inline_keyboard: [
@@ -81,8 +82,61 @@ bot.command("test", (ctx) => {
           },
         ],
         [
-          { text: "<--", callback_data: "back" },
-          { text: "-->", callback_data: "next" },
+          { text: "<--", callback_data: previousData },
+          { text: "-->", callback_data: nextData },
+        ],
+      ],
+    },
+  });
+}
+
+//INLINE QUERY //MAIN MENU
+bot.command("test", (ctx) => {
+  ctx.deleteMessage();
+  let startMainMenu = "Bienvenue, veuillez indiquer votre présence physique de l'epfl";
+  var previousData = menu.serialize({
+    action: "goToPage",
+    data: { goToPage: currentWeekNumber(-1) },
+  });
+
+  var nextData = menu.serialize({
+    action: "goToPage",
+    data: { goToPage: currentWeekNumber(1) },
+  });
+  console.log("----------------------------");
+  console.log("Nextdata", nextData);
+  console.log("----------------------------");
+  
+  bot.telegram.sendMessage(ctx.chat.id, startMainMenu, {
+    reply_markup: {
+      inline_keyboard: [
+        [
+          {
+            text: `Semaine : ${currentWeekNumber(0)}`,
+            callback_data: `week-${currentWeekNumber(0)}`,
+          },
+        ],
+        [
+          {
+            text: `Semaine : ${currentWeekNumber(1)}`,
+            callback_data: `week-${currentWeekNumber(1)}`,
+          },
+        ],
+        [
+          {
+            text: `Semaine : ${currentWeekNumber(2)}`,
+            callback_data: `week-${currentWeekNumber(2)}`,
+          },
+        ],
+        [
+          {
+            text: `Semaine : ${currentWeekNumber(3)}`,
+            callback_data: `week-${currentWeekNumber(3)}`,
+          },
+        ],
+        [
+          { text: "<--", callback_data: previousData },
+          { text: "-->", callback_data: nextData },
         ],
       ],
     },
@@ -150,6 +204,21 @@ bot.action(/^week-(.*)/, async (ctx) => {
       ],
     },
   });
+});
+
+bot.on("callback_query", async (ctx) => {
+  var callback_queryData = JSON.parse(ctx.update.callback_query.data);
+  // console.log("---------", callback_queryData.data.goToPage);
+  switch (callback_queryData.action) {
+    case "goToPage":
+      menu.goToPage(callback_queryData.data.goToPage, ctx);
+      break;
+    case "goToWeek":
+      console.log(callback_queryData.data.weekNumber);
+      break;
+    default:
+      break;
+  }
 });
 
 bot.launch();

@@ -28,7 +28,11 @@ bot.on("callback_query", async (ctx) => {
   console.log(callback_queryData.data.goToPage);
   switch (callback_queryData.action) {
     case "goToPage":
+      console.log("------------------",callback_queryData.data.weekNumber);
       menu.goToPage(callback_queryData.data.goToPage, ctx);
+      break;
+    case "goToWeek":
+      console.log(callback_queryData.data.weekNumber);
       break;
     default:
       break;
@@ -39,4 +43,6 @@ bot.on("callback_query", async (ctx) => {
 // console.log(Math.ceil(13/4));
 
 //lunch
+
+
 bot.launch();
