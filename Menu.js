@@ -1,23 +1,6 @@
 const { Markup } = require("telegraf");
+const DateSemaines = require("./DateSemaines");
 
-// var arraySemaines = [
-//   "semaine 1",
-//   "semaine 2",
-//   "semaine 3",
-//   "semaine 4",
-//   "semaine 5",
-//   "semaine 6",
-//   "semaine 7",
-//   "semaine 8",
-//   "semaine 9",
-//   "semaine 10",
-//   "semaine 11",
-//   "semaine 12",
-//   "semaine 13",
-//   "semaine 14",
-//   "semaine 15",
-//   // "semaine 16",
-// ];
 
 
 
@@ -25,13 +8,19 @@ const { Markup } = require("telegraf");
 class Menu {
   constructor(txtMessage) {
     this.currentPage = 1;
-    // this.listeSemaines = arraySemaines;
     this.txtMessage = txtMessage;
   }
 
   sendMenu(ctx) {
-    var weekNumber = this.currentWeekNumber(0);
+    var weekObj = DateSemaines.getNew(4);
+    console.log(weekObj);
+    return ctx.reply(this.txtMessage, {
+      parse_mode: "HTML",
+      ...Markup.inlineKeyboard(this.getInlineWeekMenu(weekObj)),
+    });
+  }
 
+  displayDays(ctx, weekNumber) {
     return ctx.reply(this.txtMessage, {
       parse_mode: "HTML",
       ...Markup.inlineKeyboard(this.getInlineWeekMenu(weekNumber)),
@@ -45,32 +34,24 @@ class Menu {
     });
   }
 
-  goToPage(noPage, ctx) {
-    this.updateMessage(ctx, noPage);
+  goToPage(weekObj, ctx) {
+    this.updateMessage(ctx, weekObj);
   }
 
-  getInlineWeekMenu(refWeekNumber) {
-    console.log("-----aaaaaaaaaaaaaaa-----------------");
+  getInlineWeekMenu(weekObj) {
     var finalArray = [];
     var nbentries = 4;
-    // var offset = (noPage - 1) * 4;
-
-    // if (this.isLastPage(noPage)) {
-    //   if (Math.ceil(this.listeSemaines.length % 4) != 0) {
-    //     nbentries = this.listeSemaines.length % 4;
-    //   }
-    // }
-
+    console.log(weekObj.perPage);
     var weekArray = [];
-    for (let i = 0; i < nbentries; i++) {
-      let weekNumber = this.offsetWeek(refWeekNumber, i);
+    for (let i = 0; i < weekObj.perPage; i++) {
+      let weekNumber = this.offsetWeek(weekObj.week, i);
       weekArray = [];
       weekArray.push(
         Markup.button.callback(
           `Semaine : ${weekNumber}`,
           this.serialize({
             action: "goToWeek",
-            data: { weekNumber: weekNumber },
+            data: weekObj,
           })
         )
       );
@@ -80,44 +61,91 @@ class Menu {
     var navbarArray = [];
     var previousData = this.serialize({
       action: "goToPage",
-      data: { goToPage: this.offsetWeek(refWeekNumber, -4) },
+      data: DateSemaines.previousPage(weekObj),
     });
 
     var nextData = this.serialize({
       action: "goToPage",
-      data: { goToPage: this.offsetWeek(refWeekNumber, 4) },
+      data: DateSemaines.nextPage(weekObj),
     });
 
     var previousButton = Markup.button.callback("Previous", previousData);
     var nextButton = Markup.button.callback("Next", nextData);
-    // if (this.isFirstPage(refWeekNumber)) {
-    //   navbarArray.push(nextButton);
-    // } else if (this.isLastPage(refWeekNumber)) {
-    //   navbarArray.push(previousButton);
-    // } else {
-      navbarArray.push(previousButton);
-      navbarArray.push(nextButton);
-    // }
+    navbarArray.push(previousButton);
+    navbarArray.push(nextButton);
     finalArray.push(navbarArray);
     return finalArray;
   }
 
-  isLastPage(noPage) {
-    // if (noPage == Math.ceil(this.listeSemaines.length / 4)) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
-    return false;
-  }
-
-  isFirstPage(noPage) {
-    // if (noPage <= 1) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
-    return false;
+  sendWeekDays(weekObj, ctx) {
+    console.log("-----------------ctx", weekObj.week);
+    let startMainMenu = "Veuillez selectionner les jours souhaité";
+    ctx.reply(this.nextDay(0, weekObj.week)),
+      ctx.reply(startMainMenu, {
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: `Lundi : ${this.nextDay(0, weekObj.week)}`,
+                callback_data: "date1",
+              },
+            ],
+            [
+              { text: "AM", callback_data: "date1_AM" },
+              { text: "PM", callback_data: "date1_PM" },
+            ],
+            [
+              {
+                text: `Mardi : ${this.nextDay(1, weekObj.week)}`,
+                callback_data: "date2",
+              },
+            ],
+            [
+              { text: "AM", callback_data: "date2_AM" },
+              { text: "PM", callback_data: "date2_PM" },
+            ],
+            [
+              {
+                text: `Mercredi : ${this.nextDay(2, weekObj.week)}`,
+                callback_data: "date3",
+              },
+            ],
+            [
+              { text: "AM", callback_data: "date3_AM" },
+              { text: "PM", callback_data: "date3_PM" },
+            ],
+            [
+              {
+                text: `Jeudi : ${this.nextDay(3, weekObj.week)}`,
+                callback_data: "date4",
+              },
+            ],
+            [
+              { text: "AM", callback_data: "date4_AM" },
+              { text: "PM", callback_data: "date4_PM" },
+            ],
+            [
+              {
+                text: `Vendredi : ${this.nextDay(4, weekObj.week)}`,
+                callback_data: "date5",
+              },
+            ],
+            [
+              { text: "AM", callback_data: "date5_AM" },
+              { text: "PM", callback_data: "date5_PM" },
+            ],
+            [
+              {
+                text: "<--",
+                callback_data: this.serialize({
+                  action: "goToPage",
+                  data: weekObj,
+                }),
+              },
+            ],
+          ],
+        },
+      });
   }
 
   serialize(object) {
@@ -156,8 +184,38 @@ class Menu {
     if (resultWeek < 0) {
       resultWeek = 52 + offset;
     }
+    if (resultWeek == 0) {
+      resultWeek = 52;
+    }
     return resultWeek;
   }
+
+  nextDay(dayOfTheWeek, week) {
+    date = new Date(this.currentDay(week));
+    date.setDate(date.getDate() + dayOfTheWeek);
+    var date =
+      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    return date;
+  }
+
+  currentDay(week) {
+    var year = new Date().getFullYear();
+    // Create a date for 1 Jan in required year
+    var d = new Date(year, 0);
+    // Get day of week number
+    var dayNum = d.getDay();
+    // Get days to add
+    var requiredDate = (week - 2) * 7;
+    // For ISO week numbering
+    // If 1 Jan is Friday to Sunday, go to next week
+    if (dayNum != 0 || dayNum > 4) {
+      requiredDate += 7;
+    }
+    // Add required number of days
+    d.setDate(1 - d.getDay() + ++requiredDate);
+    return d;
+  }
 }
+
 
 module.exports = Menu

@@ -20,19 +20,13 @@ bot.command("inline", (ctx) => {
 });
 
 bot.on("callback_query", async (ctx) => {
-  // console.log(ctx.update.callback_query);
-  // console.log(ctx.update.callback_query.message.message_id);
-  // console.log(ctx.update.callback_query.id);
-  // console.log(ctx.update.callback_query.data);
   var callback_queryData = JSON.parse(ctx.update.callback_query.data)
-  console.log(callback_queryData.data.goToPage);
   switch (callback_queryData.action) {
     case "goToPage":
-      console.log("------------------",callback_queryData.data.weekNumber);
-      menu.goToPage(callback_queryData.data.goToPage, ctx);
+      menu.goToPage(callback_queryData.data, ctx);
       break;
     case "goToWeek":
-      console.log(callback_queryData.data.weekNumber);
+      menu.sendWeekDays(callback_queryData.data, ctx);
       break;
     default:
       break;
