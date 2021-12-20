@@ -41,7 +41,6 @@ class Menu {
   getInlineWeekMenu(weekObj) {
     var finalArray = [];
     var nbentries = 4;
-    console.log(weekObj.perPage);
     var weekArray = [];
     for (let i = 0; i < weekObj.perPage; i++) {
       let weekNumber = this.offsetWeek(weekObj.week, i);
@@ -51,7 +50,7 @@ class Menu {
           `Semaine : ${weekNumber}`,
           this.serialize({
             action: "goToWeek",
-            data: weekObj,
+            data: DateSemaines.changeWeek(weekObj, i),
           })
         )
       );
@@ -78,7 +77,6 @@ class Menu {
   }
 
   sendWeekDays(weekObj, ctx) {
-    console.log("-----------------ctx", weekObj.week);
     let startMainMenu = "Veuillez selectionner les jours souhaité";
     ctx.reply(this.nextDay(0, weekObj.week)),
       ctx.reply(startMainMenu, {
@@ -86,7 +84,7 @@ class Menu {
           inline_keyboard: [
             [
               {
-                text: `Lundi : ${this.nextDay(0, weekObj.week)}`,
+                text: `Lundi : ${this.nextDay(0, weekObj.week, weekObj.year)}`,
                 callback_data: "date1",
               },
             ],
@@ -96,7 +94,7 @@ class Menu {
             ],
             [
               {
-                text: `Mardi : ${this.nextDay(1, weekObj.week)}`,
+                text: `Mardi : ${this.nextDay(1, weekObj.week, weekObj.year)}`,
                 callback_data: "date2",
               },
             ],
@@ -106,7 +104,11 @@ class Menu {
             ],
             [
               {
-                text: `Mercredi : ${this.nextDay(2, weekObj.week)}`,
+                text: `Mercredi : ${this.nextDay(
+                  2,
+                  weekObj.week,
+                  weekObj.year
+                )}`,
                 callback_data: "date3",
               },
             ],
@@ -116,7 +118,7 @@ class Menu {
             ],
             [
               {
-                text: `Jeudi : ${this.nextDay(3, weekObj.week)}`,
+                text: `Jeudi : ${this.nextDay(3, weekObj.week, weekObj.year)}`,
                 callback_data: "date4",
               },
             ],
@@ -126,7 +128,11 @@ class Menu {
             ],
             [
               {
-                text: `Vendredi : ${this.nextDay(4, weekObj.week)}`,
+                text: `Vendredi : ${this.nextDay(
+                  4,
+                  weekObj.week,
+                  weekObj.year
+                )}`,
                 callback_data: "date5",
               },
             ],
@@ -190,16 +196,17 @@ class Menu {
     return resultWeek;
   }
 
-  nextDay(dayOfTheWeek, week) {
-    date = new Date(this.currentDay(week));
+  nextDay(dayOfTheWeek, week, year) {
+    date = new Date(this.currentDay(week, year));
     date.setDate(date.getDate() + dayOfTheWeek);
     var date =
       date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     return date;
   }
 
-  currentDay(week) {
-    var year = new Date().getFullYear();
+  currentDay(week, year) {
+    console.log("year", year);
+    // var year = new Date().getFullYear();
     // Create a date for 1 Jan in required year
     var d = new Date(year, 0);
     // Get day of week number
