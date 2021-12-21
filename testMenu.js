@@ -1,6 +1,8 @@
 const { Telegraf } = require("telegraf");
 const { Markup } = require("telegraf");
 const Menu = require("./Menu");
+const storage = new (require("./Storage"))("./data.json");
+
 var menu = new Menu(
   "Bienvenue, veuillez indiquer votre présence physique de l'epfl"
 );
@@ -27,6 +29,38 @@ bot.on("callback_query", async (ctx) => {
       break;
     case "goToWeek":
       menu.sendWeekDays(callback_queryData.data, ctx);
+      break;
+    case "togglePresence":
+      var userId = ctx.update.callback_query.from.id;
+      var data = callback_queryData.data
+      // console.log("-------", data, "--------");
+      // console.log("-------", userId, "--------");
+      // var valueToChange = storage.obj[data[0]][data[1]][userId][data[2]][data[3]];
+      // console.log(storage.obj);
+      storage.obj[data[0]] = typeof storage.obj[data[0]] === 'undefined' ? {} : storage.obj[data[0]];
+      // console.log(storage.obj[data[0]]);
+      storage.obj[data[0]][data[1]] = typeof storage.obj[data[0]][data[1]] === 'undefined' ? {} : storage.obj[data[0]][data[1]];
+      storage.obj[data[0]][data[1]][userId] = typeof storage.obj[data[0]][data[1]][userId] === 'undefined' ? {} : storage.obj[data[0]][data[1]][userId];
+      // console.log("data1", storage.obj[data[0]][data[1]]); 
+      // console.log("data1,5 user", storage.obj[data[0]][data[1]][userId]); 
+      storage.obj[data[0]][data[1]][userId][data[2]] = typeof storage.obj[data[0]][data[1]][userId][data[2]] === 'undefined' ? {} : storage.obj[data[0]][data[1]][userId][data[2]];
+      
+      // storage.obj[data[0]][data[1]][userId][data[2]][data[3]] = typeof storage.obj[data[0]][data[1]][userId][data[2]][data[3]] === 'undefined' ? {} : storage.obj[data[0]][data[1]][userId][data[2]][data[3]];
+      // console.log(storage.obj);
+      console.log("test", storage.obj[data[0]][data[1]][userId]);
+      
+      // storage.obj[data[0]][data[1]][userId][data[2]][data[3]] == undefined ? {} : storage.obj[data[0]][data[1]][data[2]][data[3]];
+      if (typeof storage.obj[data[0]][data[1]][userId][data[2]][data[3]] === 'undefined') {
+        storage.obj[data[0]][data[1]][userId][data[2]][data[3]] = true
+      } else if (storage.obj[data[0]][data[1]][userId][data[2]][data[3]] === true) {
+        storage.obj[data[0]][data[1]][userId][data[2]][data[3]] = false;
+      } else if (storage.obj[data[0]][data[1]][userId][data[2]][data[3]] === false) {
+        storage.obj[data[0]][data[1]][userId][data[2]][data[3]] = undefined;
+      }
+      
+      console.log("data2", storage.obj[data[0]][data[1]][userId][data[2]]); 
+      
+      storage.save()
       break;
     default:
       break;

@@ -1,6 +1,5 @@
 const { Markup } = require("telegraf");
 const DateSemaines = require("./DateSemaines");
-const storage = new (require("./Storage"))("./data.json");
 
 
 
@@ -33,6 +32,10 @@ class Menu {
       parse_mode: "HTML",
       ...Markup.inlineKeyboard(this.getInlineWeekMenu(noPage)),
     });
+  }
+
+  updateJours(){
+    
   }
 
   goToPage(weekObj, ctx) {
@@ -90,8 +93,23 @@ class Menu {
               },
             ],
             [
-              { text: "AM", callback_data: "date1_AM" },
-              { text: "PM", callback_data: "date1_PM" },
+              {
+                text:
+                  "AM " +
+                  storage.obj[data[0]][data[1]][userId][data[2]][data[3]],
+                // year, week, day, period, value
+                callback_data: this.serialize({
+                  action: "togglePresence",
+                  data: [weekObj.year, weekObj.week, 0, "am"],
+                }),
+              },
+              {
+                text: "PM",
+                callback_data: this.serialize({
+                  action: "togglePresence",
+                  data: [weekObj.year, weekObj.week, 0, "pm"],
+                }),
+              },
             ],
             [
               {
@@ -100,8 +118,21 @@ class Menu {
               },
             ],
             [
-              { text: "AM", callback_data: "date2_AM" },
-              { text: "PM", callback_data: "date2_PM" },
+              {
+                text: "AM",
+                // year, week, day, period, value
+                callback_data: this.serialize({
+                  action: "togglePresence",
+                  data: [weekObj.year, weekObj.week, 1, "am"],
+                }),
+              },
+              {
+                text: "PM",
+                callback_data: this.serialize({
+                  action: "togglePresence",
+                  data: [weekObj.year, weekObj.week, 1, "pm"],
+                }),
+              },
             ],
             [
               {
@@ -114,8 +145,21 @@ class Menu {
               },
             ],
             [
-              { text: "AM", callback_data: "date3_AM" },
-              { text: "PM", callback_data: "date3_PM" },
+              {
+                text: "AM",
+                // year, week, day, period, value
+                callback_data: this.serialize({
+                  action: "togglePresence",
+                  data: [weekObj.year, weekObj.week, 2, "am"],
+                }),
+              },
+              {
+                text: "PM",
+                callback_data: this.serialize({
+                  action: "togglePresence",
+                  data: [weekObj.year, weekObj.week, 2, "pm"],
+                }),
+              },
             ],
             [
               {
@@ -124,8 +168,21 @@ class Menu {
               },
             ],
             [
-              { text: "AM", callback_data: "date4_AM" },
-              { text: "PM", callback_data: "date4_PM" },
+              {
+                text: "AM",
+                // year, week, day, period, value
+                callback_data: this.serialize({
+                  action: "togglePresence",
+                  data: [weekObj.year, weekObj.week, 3, "am"],
+                }),
+              },
+              {
+                text: "PM",
+                callback_data: this.serialize({
+                  action: "togglePresence",
+                  data: [weekObj.year, weekObj.week, 3, "pm"],
+                }),
+              },
             ],
             [
               {
@@ -138,8 +195,21 @@ class Menu {
               },
             ],
             [
-              { text: "AM", callback_data: "date5_AM" },
-              { text: "PM", callback_data: "date5_PM" },
+              {
+                text: "AM",
+                // year, week, day, period, value
+                callback_data: this.serialize({
+                  action: "togglePresence",
+                  data: [weekObj.year, weekObj.week, 4, "am"],
+                }),
+              },
+              {
+                text: "PM",
+                callback_data: this.serialize({
+                  action: "togglePresence",
+                  data: [weekObj.year, weekObj.week, 4, "pm"],
+                }),
+              },
             ],
             [
               {
