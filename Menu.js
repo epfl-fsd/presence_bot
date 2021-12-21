@@ -1,5 +1,6 @@
 const { Markup } = require("telegraf");
 const DateSemaines = require("./DateSemaines");
+const storage = new (require("./Storage"))("./data.json");
 
 
 
