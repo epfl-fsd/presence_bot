@@ -28,7 +28,7 @@ bot.on("callback_query", async (ctx) => {
       menu.goToPage(callback_queryData.data, ctx);
       break;
     case "goToWeek":
-      menu.sendWeekDays(callback_queryData.data, ctx);
+      menu.sendWeekDays(callback_queryData.data, storage, ctx);
       break;
     case "togglePresence":
       var userId = ctx.update.callback_query.from.id;
@@ -47,7 +47,7 @@ bot.on("callback_query", async (ctx) => {
       
       // storage.obj[data[0]][data[1]][userId][data[2]][data[3]] = typeof storage.obj[data[0]][data[1]][userId][data[2]][data[3]] === 'undefined' ? {} : storage.obj[data[0]][data[1]][userId][data[2]][data[3]];
       // console.log(storage.obj);
-      console.log("test", storage.obj[data[0]][data[1]][userId]);
+      // console.log("test", storage.obj[data[0]][data[1]][userId]);
       
       // storage.obj[data[0]][data[1]][userId][data[2]][data[3]] == undefined ? {} : storage.obj[data[0]][data[1]][data[2]][data[3]];
       if (typeof storage.obj[data[0]][data[1]][userId][data[2]][data[3]] === 'undefined') {
@@ -58,11 +58,11 @@ bot.on("callback_query", async (ctx) => {
         storage.obj[data[0]][data[1]][userId][data[2]][data[3]] = undefined;
       }
       
-      console.log("data2", storage.obj[data[0]][data[1]][userId][data[2]]); 
+      console.log("data2", storage.obj[data[0]][data[1]][userId]); 
       
       storage.save()
       break;
-    default:
+      default:
       break;
   }
 });

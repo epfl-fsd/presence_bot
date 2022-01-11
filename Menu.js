@@ -1,9 +1,6 @@
+const { load } = require("nodemon/lib/config");
 const { Markup } = require("telegraf");
 const DateSemaines = require("./DateSemaines");
-
-
-
-
 
 class Menu {
   constructor(txtMessage) {
@@ -34,9 +31,7 @@ class Menu {
     });
   }
 
-  updateJours(){
-    
-  }
+  updateJours() {}
 
   goToPage(weekObj, ctx) {
     this.updateMessage(ctx, weekObj);
@@ -80,10 +75,19 @@ class Menu {
     return finalArray;
   }
 
-  sendWeekDays(weekObj, ctx) {
+  getWeekDays() {}
+  sendWeekDays(weekObj, storage, ctx) {
     let startMainMenu = "Veuillez selectionner les jours souhaité";
+    console.log(weekObj.week);
+    console.log("---------", storage.obj[weekObj.year][weekObj.week]);
+
+    var weekDaysValues = this.getWeekDaysValues(weekObj, storage, ctx);
+
+    console.log(weekDaysValues);
     ctx.reply(this.nextDay(0, weekObj.week)),
       ctx.reply(startMainMenu, {
+        // ❌
+        // ✅
         reply_markup: {
           inline_keyboard: [
             [
@@ -94,17 +98,14 @@ class Menu {
             ],
             [
               {
-                text:
-                  "AM " +
-                  storage.obj[data[0]][data[1]][userId][data[2]][data[3]],
-                // year, week, day, period, value
+                text: `AM ${weekDaysValues[0]["am"] ? "✅" : "❌"}`,
                 callback_data: this.serialize({
                   action: "togglePresence",
                   data: [weekObj.year, weekObj.week, 0, "am"],
                 }),
               },
               {
-                text: "PM",
+                text: `PM ${weekDaysValues[0]["pm"] ? "✅" : "❌"}`,
                 callback_data: this.serialize({
                   action: "togglePresence",
                   data: [weekObj.year, weekObj.week, 0, "pm"],
@@ -119,7 +120,7 @@ class Menu {
             ],
             [
               {
-                text: "AM",
+                text: `AM ${weekDaysValues[1]["am"] ? "✅" : "❌"}`,
                 // year, week, day, period, value
                 callback_data: this.serialize({
                   action: "togglePresence",
@@ -127,7 +128,7 @@ class Menu {
                 }),
               },
               {
-                text: "PM",
+                text: `PM ${weekDaysValues[1]["pm"] ? "✅" : "❌"}`,
                 callback_data: this.serialize({
                   action: "togglePresence",
                   data: [weekObj.year, weekObj.week, 1, "pm"],
@@ -146,7 +147,7 @@ class Menu {
             ],
             [
               {
-                text: "AM",
+                text: `AM ${weekDaysValues[2]["am"] ? "✅" : "❌"}`,
                 // year, week, day, period, value
                 callback_data: this.serialize({
                   action: "togglePresence",
@@ -154,7 +155,7 @@ class Menu {
                 }),
               },
               {
-                text: "PM",
+                text: `PM ${weekDaysValues[2]["pm"] ? "✅" : "❌"}`,
                 callback_data: this.serialize({
                   action: "togglePresence",
                   data: [weekObj.year, weekObj.week, 2, "pm"],
@@ -169,7 +170,7 @@ class Menu {
             ],
             [
               {
-                text: "AM",
+                text: `AM ${weekDaysValues[3]["am"] ? "✅" : "❌"}`,
                 // year, week, day, period, value
                 callback_data: this.serialize({
                   action: "togglePresence",
@@ -177,7 +178,7 @@ class Menu {
                 }),
               },
               {
-                text: "PM",
+                text: `PM ${weekDaysValues[3]["pm"] ? "✅" : "❌"}`,
                 callback_data: this.serialize({
                   action: "togglePresence",
                   data: [weekObj.year, weekObj.week, 3, "pm"],
@@ -196,7 +197,7 @@ class Menu {
             ],
             [
               {
-                text: "AM",
+                text: `AM ${weekDaysValues[4]["am"] ? "✅" : "❌"}`,
                 // year, week, day, period, value
                 callback_data: this.serialize({
                   action: "togglePresence",
@@ -204,7 +205,7 @@ class Menu {
                 }),
               },
               {
-                text: "PM",
+                text: `PM ${weekDaysValues[4]["pm"] ? "✅" : "❌"}`,
                 callback_data: this.serialize({
                   action: "togglePresence",
                   data: [weekObj.year, weekObj.week, 4, "pm"],
@@ -224,6 +225,59 @@ class Menu {
         },
       });
   }
+
+  getWeekDaysValues(weekObj, storage, ctx) {
+    var valueReturn = {};
+    console.log(storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id]);
+    // valueReturn = storage.obj
+    // valueReturn[weekObj.year][weekObj.week] = storage.obj[weekObj.year][weekObj.week];
+    // valueReturn[weekObj.year][weekObj.week][ctx.update.callback_query.from.id] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id];
+
+    
+    // try {
+      // valueReturn =
+      //   storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id];
+    // } catch (error) {
+    //   valueReturn = {
+    //     0: { am: false, pm: false },
+    //     1: { am: false, pm: false },
+    //     2: { am: false, pm: false },
+    //     3: { am: false, pm: false },
+    //     4: { am: false, pm: false },
+    //   };
+    // }
+    for (let i = 0; i < 5; i++) {
+      if (!storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]) {
+        valueReturn[i] = {}
+      } else {
+        valueReturn[i] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]
+      }
+      try {
+        valueReturn[i]["am"] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["am"]
+      } catch (error) {
+        valueReturn[i]["am"] = false
+      }
+      try {
+        valueReturn[i]["pm"] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["pm"]
+      } catch (error) {
+        valueReturn[i]["pm"] = false
+      }
+      // if (storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["am"]) {
+      //   console.log("------", valueReturn[i]);
+      //   valueReturn[i]["am"] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["am"]
+      // } else {
+      //   valueReturn[i]["am"] = false
+      // }
+      // if (storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["pm"]) {
+      //   valueReturn[i]["pm"] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["pm"]
+      // } else {
+      //   valueReturn[i]["pm"] = false
+
+      // }
+    }
+    return valueReturn;
+  }
+  getDayAmPm() {}
 
   serialize(object) {
     return JSON.stringify(object);
@@ -295,5 +349,4 @@ class Menu {
   }
 }
 
-
-module.exports = Menu
+module.exports = Menu;

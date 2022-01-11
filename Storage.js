@@ -5,10 +5,10 @@ class Storage {
     this.obj = this.load()
   }
 
-  update(year, week, day, period, value){
-    this.obj[year][week][day][period] = value 
-    this.save()
-  }
+//   update(year, week, day, period, value){
+//     this.obj[year][week][day][period] = value 
+//     this.save()
+//   }
   
   load() {
       if (this.fileExists()) {
