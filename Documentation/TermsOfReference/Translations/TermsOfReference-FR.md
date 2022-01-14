@@ -2,7 +2,7 @@
 ![](https://i.imgur.com/4u4tx9r.jpg)
 
 ## Traduction:
-* [English](https://github.com/epfl-idevfsd/presence_bot/TermsOfReference.md)
+* [English](https://github.com/epfl-idevfsd/presence_bot/blob/main/TermsOfReference.md)
 
 ## Contexte
 Personne ne veut se retrouver seul par surprise sur le site de l'EPFL. La plupart des apprentis sont confrontés à une perte de motivation lorsqu'ils sont dans cette situation. On peut pourtant préciser si on fait du télétravail dans absences.epfl.ch, seulement voilà : informer ces collègues de sa présence tous les jours peut être chronophage ou encore peu pratique pour certaines personne. 

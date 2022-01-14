@@ -2,7 +2,7 @@
 ![](https://i.imgur.com/4u4tx9r.jpg)
 
 ## Translations:
-* [Français](https://github.com/epfl-idevfsd/presence_bot/Documentation/TermsOfReference/TermsOfReference-FR.md)
+* [Français](https://github.com/epfl-idevfsd/presence_bot/blob/main/Documentation/TermsOfReference/Translations/TermsOfReference-FR.md)
 
 
 ## KSP
