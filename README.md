@@ -25,8 +25,6 @@ We have used for that telegraf a library which allows us to make our bot on tele
     + [Exemple](#exemple)
   * [Let us know !](#let-us-know--)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
 ## How to Install and Run the Project
 ### MakeFile 
 
@@ -60,11 +58,10 @@ How to use the bot
 #### 2. Choose the current week and click on the button
 ![](https://i.imgur.com/X5M2H6T.png)
 #### 3. finally click on the [AM] or [PM] button. Knowing that: 
- ❌ means not present on site || ✅ means present on site
+ ❌ means not present on site || ✅ means present on site  
 ![](https://i.imgur.com/4ndrmgN.png)
 
 ## Let us know !
 
-:::info
 **Find this document incomplete?** Leave a comment!
-:::
+
