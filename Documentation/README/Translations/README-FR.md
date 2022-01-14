@@ -9,7 +9,7 @@ Bot présence
 ![](https://i.imgur.com/4u4tx9r.jpg)
 
 ## Traduction:
-* [English](https://github.com/epfl-idevfsd/presence_bot/README.md)
+* [English](https://github.com/epfl-idevfsd/presence_bot#readme)
 
 ### Ce que fait l'application
 C'est un bot telegram qui permet, à travers une interface graphique, d'indiquer si l'on travaille à domicile ou sur site.  
