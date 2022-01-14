@@ -6,6 +6,7 @@ Presence bot
 [![Generic badge](https://img.shields.io/badge/Download-BotPresence-<COLOR>.svg)](https://github.com/epfl-idevfsd/presence_bot/archive/refs/heads/main.zip) [![JavaScript](https://img.shields.io/badge/--F7DF1E?logo=javascript&logoColor=000)](https://www.javascript.com/) [![Docker](https://badgen.net/badge/icon/docker?icon=docker&label)](https://https://docker.com/) 
 [![ForTheBadge built-with-love](http://ForTheBadge.com/images/badges/built-with-love.svg)](https://www.google.com/url?sa=i&url=https%3A%2F%2Fgiphy.com%2Fexplore%2Ffull-stack-developer&psig=AOvVaw3MYRKF-svcGg5xgURph5S-&ust=1642254475891000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKCthOmwsfUCFQAAAAAdAAAAABBZ)[![ForTheBadge built-by-developers](http://ForTheBadge.com/images/badges/built-by-developers.svg)](https://github.com/epfl-idevfsd/presence_bot/graphs/contributors)
 
+![](https://i.imgur.com/4u4tx9r.jpg)
 
 ### What the application does
 It's a telegram bot that allows, through a graphic interface, to indicate whether one is working from home or on site.  
