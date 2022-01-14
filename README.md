@@ -1,108 +1,72 @@
-# Cahier des charges  
-![](https://i.imgur.com/4u4tx9r.jpg)
-
-## Contexte // Context
-
-**[FR]** Personne ne veut se retrouver seul par surprise sur le site de l'EPFL. La plupart des apprentis sont confrontés à une perte de motivation lorsqu'ils sont dans cette situation. On peut pourtant préciser si on fait du télétravail dans absences.epfl.ch, seulement voilà : informer ces collègues de sa présence tous les jours peut être chronophage ou encore peu pratique pour certaines personne. 
-
----
-
-**[EN]** No one wants to find themselves alone by surprise at the EPFL site. Most apprentices are faced with a lack of motivation when they are in this situation. However, it is possible to specify if you are teleworking in absences.epfl.ch, but here's the thing: informing your colleagues of your presence every day can be time-consuming or even impractical for some people. 
-## Objectif // Goal
-
-**[FR]** C'est la raison pour laquelle nous avons eu l'idée de ce bot. Le but étant de faciliter la communication des présences sur site des membres de ISAS-FSD.
-
----
-
-**[EN]** This is why we came up with the idea of this bot. The aim is to facilitate the communication of ISAS-FSD members' on-site presence.
 
 
-## KSP
-**[FR]**
-* Extrêmement rapide d’utilisation
-* Ui minimaliste
-* Utilisable n’importe quand et n’importe ou
- 
----
+Presence bot
+===
 
-**[EN]**
-* Extremely fast to use
-* Minimalist UI
-* Can be used anytime and anywhere 
+[![Generic badge](https://img.shields.io/badge/Download-BotPresence-<COLOR>.svg)](https://github.com/epfl-idevfsd/presence_bot/archive/refs/heads/main.zip) [![JavaScript](https://img.shields.io/badge/--F7DF1E?logo=javascript&logoColor=000)](https://www.javascript.com/) [![Docker](https://badgen.net/badge/icon/docker?icon=docker&label)](https://https://docker.com/) 
+[![ForTheBadge built-with-love](http://ForTheBadge.com/images/badges/built-with-love.svg)](https://www.google.com/url?sa=i&url=https%3A%2F%2Fgiphy.com%2Fexplore%2Ffull-stack-developer&psig=AOvVaw3MYRKF-svcGg5xgURph5S-&ust=1642254475891000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKCthOmwsfUCFQAAAAAdAAAAABBZ)[![ForTheBadge built-by-developers](http://ForTheBadge.com/images/badges/built-by-developers.svg)](https://github.com/epfl-idevfsd/presence_bot/graphs/contributors)
 
-## Fiche signalétique // information sheet
-**[FR]**
-> Nombre d’utilisateur simultané : **1 personne**  
-> Personne cible : **Membres ISAS-FSD**  
-> Prix : **Gratuit**  
-> Plateforme : **Telegram(app & browser)**  
-> Language de programmation : **JavaScript**  
-> Dépendance : **telegraf, nodeJs**
-> Date limite : **21 Janvier 2022**  
----
-**[EN]**
->Number of simultaneous users: **1 person** >  
-> Target person: **ISAS-FSD members**   
-Price: **Free**  
-> Platform: **Telegram(app & browser)**  
-> Programming language: **JavaScript**  
-> Dependency: **telegraf, nodeJs**  
-> Deadline: **21 January 2022**  
-## Description fonctionnelle des besoins // Functional description of requirements
-**[FR]**
-#### Mettre à jour les informations du planning :
-* Image
-* Tableau à double entrée  
-#### Afficher les boutons :
-* Inline command
-* Telegraf  
-#### Utilisation des boutons :
-* Inline command 
-* Telegraf  
-#### Telegraf :
-* Afficher les boutons
-* Utilsation des boutons
-#### JSON :
-* Insérer des données  
-* Éxtraire des données 
 
----
+### What the application does
+It's a telegram bot that allows, through a graphic interface, to indicate whether one is working from home or on site.  
 
-**[EN]**
-#### Update schedule information:
-* Image
-* Double entry table  
-#### Show buttons :
-* Inline command
-* Telegraf  
-#### Using the buttons:
-* Inline command 
-* Telegraf  
-#### Telegraf:
-* Displaying the buttons
-* Use of buttons
-#### JSON :
-* Inserting data  
-* Extracting data 
-## Délais // Deadline
-**[FR]** 21 janvier 2022
+### Why we used the technologies we used.
+We have used for that telegraf a library which allows us to make our bot on telegram, in JavaScript, with a data storage in the form of a Json.
 
----
+## Table of Contents
 
-**[EN]** 21 January 2022  
-# MakeFile 
+[TOC]
 
-## build:
+## How to Install and Run the Project
+### MakeFile 
+
+#### build:
 > docker-compose build 
 
-## run:
+#### run:
 > docker run -it botpresence bash
 
-## start:
+#### start:
 > docker-compose up --build botpresence
 
-## stop:
+#### stop:
 > docker stop botpresence:latest
 
-## kill:
+#### kill:
 > docker kill $$(docker ps)
+
+
+How to use the bot
+---
+### Toggle presence
+
+```sequence
+Note left of Alice: "I'm working from home today"
+Alice->Telegram: Click on the current week button
+Telegram->Bot: Send the choosen week
+Bot-->Telegram: Send the selected week information
+Telegram --> Alice: Display the week with date 
+Alice->Telegram: Click on the current day button
+Telegram->Bot: Send the choosen day
+Bot-->Telegram: Send the selected day information (AM/PM)
+Telegram --> Alice: Display the current day 
+Alice->Telegram: Click on the current day AM button and the PM
+Telegram->Bot: Store the information
+
+```
+
+---
+### Exemple
+#### 1. Choose the current week, you can use the previous and next button to navigate between the month.
+![](https://i.imgur.com/QbFl9fA.png)
+#### 2. Choose the current week and click on the button
+![](https://i.imgur.com/X5M2H6T.png)
+#### 3. finally click on the [AM] or [PM] button. Knowing that: 
+ ❌ means not present on site || ✅ means present on site
+![](https://i.imgur.com/4ndrmgN.png)
+
+## Let us know !
+
+:::info
+**Find this document incomplete?** Leave a comment!
+:::
