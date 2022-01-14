@@ -15,7 +15,17 @@ We have used for that telegraf a library which allows us to make our bot on tele
 
 ## Table of Contents
 
-[TOC]
+- [Presence bot](#presence-bot)
+    + [What the application does](#what-the-application-does)
+    + [Why we used the technologies we used.](#why-we-used-the-technologies-we-used)
+  * [Table of Contents](#table-of-contents)
+  * [How to Install and Run the Project](#how-to-install-and-run-the-project)
+  * [How to use the bot](#how-to-use-the-bot)
+    + [Toggle presence](#toggle-presence)
+    + [Exemple](#exemple)
+  * [Let us know !](#let-us-know--)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
 ## How to Install and Run the Project
 ### MakeFile 
@@ -40,20 +50,8 @@ How to use the bot
 ---
 ### Toggle presence
 
-```sequence
-Note left of Alice: "I'm working from home today"
-Alice->Telegram: Click on the current week button
-Telegram->Bot: Send the choosen week
-Bot-->Telegram: Send the selected week information
-Telegram --> Alice: Display the week with date 
-Alice->Telegram: Click on the current day button
-Telegram->Bot: Send the choosen day
-Bot-->Telegram: Send the selected day information (AM/PM)
-Telegram --> Alice: Display the current day 
-Alice->Telegram: Click on the current day AM button and the PM
-Telegram->Bot: Store the information
+![](https://i.imgur.com/1uVwKPD.png)
 
-```
 
 ---
 ### Exemple
