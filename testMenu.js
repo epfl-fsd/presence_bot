@@ -28,28 +28,41 @@ bot.on("callback_query", async (ctx) => {
       menu.goToPage(callback_queryData.data, ctx);
       break;
     case "goToWeek":
-      menu.sendWeekDays(callback_queryData.data, storage, ctx);
+      var userId = ctx.update.callback_query.from.id;
+      var data = callback_queryData.data;
+      // checkDays(storage, data, userId);
+      console.log(storage.obj[data[0]]); 
+
+      menu.sendWeekDays(data, storage, ctx);
       break;
     case "togglePresence":
       var userId = ctx.update.callback_query.from.id;
       var data = callback_queryData.data
-      // console.log("-------", data, "--------");
-      // console.log("-------", userId, "--------");
-      // var valueToChange = storage.obj[data[0]][data[1]][userId][data[2]][data[3]];
-      // console.log(storage.obj);
+      // checkDays(storage, data, userId)
+      console.log(data);
+      
+      // console.log("data2", storage.obj[data[0]][data[1]][userId]); 
+      
+      let tmpWeekObj = {
+        year: data[0],
+        week: data[1],
+        perPage: 4
+      };
+      let presenceState = storage.getPresence(data[0], data[1], userId, data[2], data[3]) ? false : true
+      storage.setPresence(data[0], data[1], userId, data[2], data[3], presenceState);
+      menu.sendWeekDays(tmpWeekObj, storage, ctx);
+
+      break;
+      default:
+      break;
+  }
+});
+
+function checkDays(storage, data, userId){
       storage.obj[data[0]] = typeof storage.obj[data[0]] === 'undefined' ? {} : storage.obj[data[0]];
-      // console.log(storage.obj[data[0]]);
       storage.obj[data[0]][data[1]] = typeof storage.obj[data[0]][data[1]] === 'undefined' ? {} : storage.obj[data[0]][data[1]];
       storage.obj[data[0]][data[1]][userId] = typeof storage.obj[data[0]][data[1]][userId] === 'undefined' ? {} : storage.obj[data[0]][data[1]][userId];
-      // console.log("data1", storage.obj[data[0]][data[1]]); 
-      // console.log("data1,5 user", storage.obj[data[0]][data[1]][userId]); 
       storage.obj[data[0]][data[1]][userId][data[2]] = typeof storage.obj[data[0]][data[1]][userId][data[2]] === 'undefined' ? {} : storage.obj[data[0]][data[1]][userId][data[2]];
-      
-      // storage.obj[data[0]][data[1]][userId][data[2]][data[3]] = typeof storage.obj[data[0]][data[1]][userId][data[2]][data[3]] === 'undefined' ? {} : storage.obj[data[0]][data[1]][userId][data[2]][data[3]];
-      // console.log(storage.obj);
-      // console.log("test", storage.obj[data[0]][data[1]][userId]);
-      
-      // storage.obj[data[0]][data[1]][userId][data[2]][data[3]] == undefined ? {} : storage.obj[data[0]][data[1]][data[2]][data[3]];
       if (typeof storage.obj[data[0]][data[1]][userId][data[2]][data[3]] === 'undefined') {
         storage.obj[data[0]][data[1]][userId][data[2]][data[3]] = true
       } else if (storage.obj[data[0]][data[1]][userId][data[2]][data[3]] === true) {
@@ -57,15 +70,8 @@ bot.on("callback_query", async (ctx) => {
       } else if (storage.obj[data[0]][data[1]][userId][data[2]][data[3]] === false) {
         storage.obj[data[0]][data[1]][userId][data[2]][data[3]] = undefined;
       }
-      
-      console.log("data2", storage.obj[data[0]][data[1]][userId]); 
-      
       storage.save()
-      break;
-      default:
-      break;
-  }
-});
+}
 
 // console.log(3/2);
 // console.log(Math.ceil(13/4));

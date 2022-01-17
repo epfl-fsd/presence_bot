@@ -10,7 +10,6 @@ class Menu {
 
   sendMenu(ctx) {
     var weekObj = DateSemaines.getNew(4);
-    console.log(weekObj);
     return ctx.reply(this.txtMessage, {
       parse_mode: "HTML",
       ...Markup.inlineKeyboard(this.getInlineWeekMenu(weekObj)),
@@ -30,10 +29,18 @@ class Menu {
       ...Markup.inlineKeyboard(this.getInlineWeekMenu(noPage)),
     });
   }
+  updateWeek(weekObj, storage, ctx) {
+      var replyValue = this.getWeekDays(weekObj, storage, ctx);
+    return ctx.editMessageText(this.txtMessage, {
+      parse_mode: "HTML",
+      ...Markup.inlineKeyboard(replyValue),
+    });
+  }
 
   updateJours() {}
 
   goToPage(weekObj, ctx) {
+    console.debug("weekobj object: ", weekObj);
     this.updateMessage(ctx, weekObj);
   }
 
@@ -75,208 +82,171 @@ class Menu {
     return finalArray;
   }
 
-  getWeekDays() {}
   sendWeekDays(weekObj, storage, ctx) {
+    console.log("send week days", weekObj);
+    console.log("-----------------");
+    // console.log(storage.obj[weekObj.year]);
     let startMainMenu = "Veuillez selectionner les jours souhaité";
-    console.log(weekObj.week);
-    console.log("---------", storage.obj[weekObj.year][weekObj.week]);
+    ctx.editMessageText(startMainMenu, this.getWeekDays(weekObj, storage, ctx));
+  }
+  getWeekDays(weekObj, storage, ctx) {
 
-    var weekDaysValues = this.getWeekDaysValues(weekObj, storage, ctx);
-
-    console.log(weekDaysValues);
-    ctx.reply(this.nextDay(0, weekObj.week)),
-      ctx.reply(startMainMenu, {
-        // ❌
-        // ✅
-        reply_markup: {
-          inline_keyboard: [
-            [
-              {
-                text: `Lundi : ${this.nextDay(0, weekObj.week, weekObj.year)}`,
-                callback_data: "date1",
-              },
-            ],
-            [
-              {
-                text: `AM ${weekDaysValues[0]["am"] ? "✅" : "❌"}`,
-                callback_data: this.serialize({
-                  action: "togglePresence",
-                  data: [weekObj.year, weekObj.week, 0, "am"],
-                }),
-              },
-              {
-                text: `PM ${weekDaysValues[0]["pm"] ? "✅" : "❌"}`,
-                callback_data: this.serialize({
-                  action: "togglePresence",
-                  data: [weekObj.year, weekObj.week, 0, "pm"],
-                }),
-              },
-            ],
-            [
-              {
-                text: `Mardi : ${this.nextDay(1, weekObj.week, weekObj.year)}`,
-                callback_data: "date2",
-              },
-            ],
-            [
-              {
-                text: `AM ${weekDaysValues[1]["am"] ? "✅" : "❌"}`,
-                // year, week, day, period, value
-                callback_data: this.serialize({
-                  action: "togglePresence",
-                  data: [weekObj.year, weekObj.week, 1, "am"],
-                }),
-              },
-              {
-                text: `PM ${weekDaysValues[1]["pm"] ? "✅" : "❌"}`,
-                callback_data: this.serialize({
-                  action: "togglePresence",
-                  data: [weekObj.year, weekObj.week, 1, "pm"],
-                }),
-              },
-            ],
-            [
-              {
-                text: `Mercredi : ${this.nextDay(
-                  2,
-                  weekObj.week,
-                  weekObj.year
-                )}`,
-                callback_data: "date3",
-              },
-            ],
-            [
-              {
-                text: `AM ${weekDaysValues[2]["am"] ? "✅" : "❌"}`,
-                // year, week, day, period, value
-                callback_data: this.serialize({
-                  action: "togglePresence",
-                  data: [weekObj.year, weekObj.week, 2, "am"],
-                }),
-              },
-              {
-                text: `PM ${weekDaysValues[2]["pm"] ? "✅" : "❌"}`,
-                callback_data: this.serialize({
-                  action: "togglePresence",
-                  data: [weekObj.year, weekObj.week, 2, "pm"],
-                }),
-              },
-            ],
-            [
-              {
-                text: `Jeudi : ${this.nextDay(3, weekObj.week, weekObj.year)}`,
-                callback_data: "date4",
-              },
-            ],
-            [
-              {
-                text: `AM ${weekDaysValues[3]["am"] ? "✅" : "❌"}`,
-                // year, week, day, period, value
-                callback_data: this.serialize({
-                  action: "togglePresence",
-                  data: [weekObj.year, weekObj.week, 3, "am"],
-                }),
-              },
-              {
-                text: `PM ${weekDaysValues[3]["pm"] ? "✅" : "❌"}`,
-                callback_data: this.serialize({
-                  action: "togglePresence",
-                  data: [weekObj.year, weekObj.week, 3, "pm"],
-                }),
-              },
-            ],
-            [
-              {
-                text: `Vendredi : ${this.nextDay(
-                  4,
-                  weekObj.week,
-                  weekObj.year
-                )}`,
-                callback_data: "date5",
-              },
-            ],
-            [
-              {
-                text: `AM ${weekDaysValues[4]["am"] ? "✅" : "❌"}`,
-                // year, week, day, period, value
-                callback_data: this.serialize({
-                  action: "togglePresence",
-                  data: [weekObj.year, weekObj.week, 4, "am"],
-                }),
-              },
-              {
-                text: `PM ${weekDaysValues[4]["pm"] ? "✅" : "❌"}`,
-                callback_data: this.serialize({
-                  action: "togglePresence",
-                  data: [weekObj.year, weekObj.week, 4, "pm"],
-                }),
-              },
-            ],
-            [
-              {
-                text: "<--",
-                callback_data: this.serialize({
-                  action: "goToPage",
-                  data: weekObj,
-                }),
-              },
-            ],
+    // var weekDaysValues = this.getWeekDaysValues(weekObj, storage, ctx);
+    let user = ctx.update.callback_query.from.id;
+    return {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: `Lundi : ${this.nextDay(0, weekObj.week, weekObj.year)}`,
+              callback_data: "date1",
+            },
           ],
-        },
-      });
+          [
+            {
+              text: `AM ${storage.getPresence(weekObj.year, weekObj.week, user, 0, "am") ? "✅" : "❌"}`,
+              callback_data: this.serialize({
+                action: "togglePresence",
+                data: [weekObj.year, weekObj.week, 0, "am"],
+              }),
+            },
+            {
+              text: `PM ${storage.getPresence(weekObj.year, weekObj.week, user, 0, "pm") ? "✅" : "❌"}`,
+              callback_data: this.serialize({
+                action: "togglePresence",
+                data: [weekObj.year, weekObj.week, 0, "pm"],
+              }),
+            },
+          ],
+          [
+            {
+              text: `Mardi : ${this.nextDay(1, weekObj.week, weekObj.year)}`,
+              callback_data: "date2",
+            },
+          ],
+          [
+            {
+              text: `AM ${storage.getPresence(weekObj.year, weekObj.week, user, 1, "am") ? "✅" : "❌"}`,
+              // year, week, day, period, value
+              callback_data: this.serialize({
+                action: "togglePresence",
+                data: [weekObj.year, weekObj.week, 1, "am"],
+              }),
+            },
+            {
+              text: `PM ${storage.getPresence(weekObj.year, weekObj.week, user, 1, "pm") ? "✅" : "❌"}`,
+              callback_data: this.serialize({
+                action: "togglePresence",
+                data: [weekObj.year, weekObj.week, 1, "pm"],
+              }),
+            },
+          ],
+          [
+            {
+              text: `Mercredi : ${this.nextDay(2, weekObj.week, weekObj.year)}`,
+              callback_data: "date3",
+            },
+          ],
+          [
+            {
+              text: `AM ${storage.getPresence(weekObj.year, weekObj.week, user, 2, "am") ? "✅" : "❌"}`,
+              // year, week, day, period, value
+              callback_data: this.serialize({
+                action: "togglePresence",
+                data: [weekObj.year, weekObj.week, 2, "am"],
+              }),
+            },
+            {
+              text: `PM ${storage.getPresence(weekObj.year, weekObj.week, user, 2, "pm") ? "✅" : "❌"}`,
+              callback_data: this.serialize({
+                action: "togglePresence",
+                data: [weekObj.year, weekObj.week, 2, "pm"],
+              }),
+            },
+          ],
+          [
+            {
+              text: `Jeudi : ${this.nextDay(3, weekObj.week, weekObj.year)}`,
+              callback_data: "date4",
+            },
+          ],
+          [
+            {
+              text: `AM ${storage.getPresence(weekObj.year, weekObj.week, user, 3, "am") ? "✅" : "❌"}`,
+              // year, week, day, period, value
+              callback_data: this.serialize({
+                action: "togglePresence",
+                data: [weekObj.year, weekObj.week, 3, "am"],
+              }),
+            },
+            {
+              text: `PM ${storage.getPresence(weekObj.year, weekObj.week, user, 3, "pm") ? "✅" : "❌"}`,
+              callback_data: this.serialize({
+                action: "togglePresence",
+                data: [weekObj.year, weekObj.week, 3, "pm"],
+              }),
+            },
+          ],
+          [
+            {
+              text: `Vendredi : ${this.nextDay(4, weekObj.week, weekObj.year)}`,
+              callback_data: "date5",
+            },
+          ],
+          [
+            {
+              text: `AM ${storage.getPresence(weekObj.year, weekObj.week, user, 4, "am") ? "✅" : "❌"}`,
+              // year, week, day, period, value
+              callback_data: this.serialize({
+                action: "togglePresence",
+                data: [weekObj.year, weekObj.week, 4, "am"],
+              }),
+            },
+            {
+              text: `PM ${storage.getPresence(weekObj.year, weekObj.week, user, 4, "pm") ? "✅" : "❌"}`,
+              callback_data: this.serialize({
+                action: "togglePresence",
+                data: [weekObj.year, weekObj.week, 4, "pm"],
+              }),
+            },
+          ],
+          [
+            {
+              text: "<--",
+              callback_data: this.serialize({
+                action: "goToPage",
+                data: weekObj,
+              }),
+            },
+          ],
+        ],
+      },
+    };
   }
 
-  getWeekDaysValues(weekObj, storage, ctx) {
-    var valueReturn = {};
-    console.log(storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id]);
-    // valueReturn = storage.obj
-    // valueReturn[weekObj.year][weekObj.week] = storage.obj[weekObj.year][weekObj.week];
-    // valueReturn[weekObj.year][weekObj.week][ctx.update.callback_query.from.id] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id];
-
-    
-    // try {
-      // valueReturn =
-      //   storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id];
-    // } catch (error) {
-    //   valueReturn = {
-    //     0: { am: false, pm: false },
-    //     1: { am: false, pm: false },
-    //     2: { am: false, pm: false },
-    //     3: { am: false, pm: false },
-    //     4: { am: false, pm: false },
-    //   };
-    // }
-    for (let i = 0; i < 5; i++) {
-      if (!storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]) {
-        valueReturn[i] = {}
-      } else {
-        valueReturn[i] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]
-      }
-      try {
-        valueReturn[i]["am"] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["am"]
-      } catch (error) {
-        valueReturn[i]["am"] = false
-      }
-      try {
-        valueReturn[i]["pm"] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["pm"]
-      } catch (error) {
-        valueReturn[i]["pm"] = false
-      }
-      // if (storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["am"]) {
-      //   console.log("------", valueReturn[i]);
-      //   valueReturn[i]["am"] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["am"]
-      // } else {
-      //   valueReturn[i]["am"] = false
-      // }
-      // if (storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["pm"]) {
-      //   valueReturn[i]["pm"] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["pm"]
-      // } else {
-      //   valueReturn[i]["pm"] = false
-
-      // }
-    }
-    return valueReturn;
-  }
+  // getWeekDaysValues(weekObj, storage, ctx) {
+  //   var valueReturn = {};
+  //   for (let i = 0; i < 5; i++) {
+  //     if (
+  //       !storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]
+  //     ) {
+  //       valueReturn[i] = {};
+  //     } else {
+  //       valueReturn[i] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i];
+  //     }
+  //     try {
+  //       valueReturn[i]["am"] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["am"];
+  //     } catch (error) {
+  //       valueReturn[i]["am"] = false;
+  //     }
+  //     try {
+  //       valueReturn[i]["pm"] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["pm"];
+  //     } catch (error) {
+  //       valueReturn[i]["pm"] = false;
+  //     }
+  //   }
+  //   return valueReturn;
+  // }
   getDayAmPm() {}
 
   serialize(object) {
@@ -330,7 +300,6 @@ class Menu {
   }
 
   currentDay(week, year) {
-    console.log("year", year);
     // var year = new Date().getFullYear();
     // Create a date for 1 Jan in required year
     var d = new Date(year, 0);
