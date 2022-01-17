@@ -69,5 +69,5 @@ Comment utiliser le bot
 
 ## Faites-nous savoir !
 
-**Vous trouvez ce document incomplet ?** Laissez un commentaire !
+**Vous trouvez ce document incomplet ?** [Laissez un commentaire !](https://github.com/epfl-idevfsd/presence_bot/issues/new)
 

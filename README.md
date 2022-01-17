@@ -67,5 +67,5 @@ How to use the bot
 
 ## Let us know !
 
-**Find this document incomplete?** Leave a comment!
+**Find this document incomplete?** [Leave a comment!](https://github.com/epfl-idevfsd/presence_bot/issues/new)
 
