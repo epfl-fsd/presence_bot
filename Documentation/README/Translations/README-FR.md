@@ -55,7 +55,7 @@ Comment utiliser le bot
 ---
 ### Modifier la présence
 
-![](https://i.imgur.com/1uVwKPD.png)
+![](https://i.imgur.com/tLDga3O.jpg)
 
 
 ---
