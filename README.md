@@ -8,7 +8,7 @@ Presence bot
 
 ![](https://i.imgur.com/4u4tx9r.jpg)
 
-## Traduction:
+## Translation:
 * [Français](https://github.com/epfl-idevfsd/presence_bot/blob/main/Documentation/README/Translations/README-FR.md)
 
 ### What the application does
@@ -52,7 +52,7 @@ How to use the bot
 ---
 ### Toggle presence
 
-![](https://i.imgur.com/1uVwKPD.png)
+![](https://i.imgur.com/tLDga3O.jpg)
 
 
 ---
