@@ -1,6 +1,10 @@
 const { load } = require("nodemon/lib/config");
 const { Markup } = require("telegraf");
 const DateSemaines = require("./DateSemaines");
+const fs = require("fs");
+const storage = new (require("./Storage"))("./data.json");
+const image = new (require("./Image"))("./image/template.svg", "");
+
 
 class Menu {
   constructor(txtMessage) {
@@ -10,9 +14,18 @@ class Menu {
 
   sendMenu(ctx) {
     var weekObj = DateSemaines.getNew(4);
-    return ctx.reply(this.txtMessage, {
+    // return ctx.reply(this.txtMessage, {
+    //   parse_mode: "HTML",
+    //   ...Markup.inlineKeyboard(this.getInlineWeekMenu(weekObj)),
+    // });
+    var weekObj = DateSemaines.getNew(4);
+    return ctx.replyWithPhoto({
+      source: fs.createReadStream("./image/logo-epfl.png"),
+    },
+    {
+      caption: this.txtMessage,
       parse_mode: "HTML",
-      ...Markup.inlineKeyboard(this.getInlineWeekMenu(weekObj)),
+        ...Markup.inlineKeyboard(this.getInlineWeekMenu(weekObj)),
     });
   }
 
@@ -82,12 +95,25 @@ class Menu {
     return finalArray;
   }
 
-  sendWeekDays(weekObj, storage, ctx) {
+  async sendWeekDays(weekObj, storage, ctx) {
     console.log("send week days", weekObj);
     console.log("-----------------");
+    let source = fs.createReadStream(await image.get(2022, 5, storage, ctx))
     // console.log(storage.obj[weekObj.year]);
     let startMainMenu = "Veuillez selectionner les jours souhaité";
-    ctx.editMessageText(startMainMenu, this.getWeekDays(weekObj, storage, ctx));
+    ctx.editMessageMedia(
+      {
+      type: 'photo',
+      media: {source}
+      },
+      {
+      caption: 'TotoCaption',
+      parse_mode: "HTML",
+        ...Markup.inlineKeyboard([
+          new Markup.button.callback("toto", "tutu"),
+          new Markup.button.callback("toto", "tutu")
+      ]),
+    });
   }
   getWeekDays(weekObj, storage, ctx) {
 
