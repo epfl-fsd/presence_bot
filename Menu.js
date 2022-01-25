@@ -139,7 +139,7 @@ class Menu {
           [
             {
               text: `Lundi : ${this.nextDay(0, weekObj.week, weekObj.year)}`,
-              callback_data: "date1",
+              callback_data: "[]",
             },
           ],
           [
@@ -161,7 +161,7 @@ class Menu {
           [
             {
               text: `Mardi : ${this.nextDay(1, weekObj.week, weekObj.year)}`,
-              callback_data: "date2",
+              callback_data: "[]",
             },
           ],
           [
@@ -184,7 +184,7 @@ class Menu {
           [
             {
               text: `Mercredi : ${this.nextDay(2, weekObj.week, weekObj.year)}`,
-              callback_data: "date3",
+              callback_data: "[]",
             },
           ],
           [
@@ -207,7 +207,7 @@ class Menu {
           [
             {
               text: `Jeudi : ${this.nextDay(3, weekObj.week, weekObj.year)}`,
-              callback_data: "date4",
+              callback_data: "[]",
             },
           ],
           [
@@ -230,7 +230,7 @@ class Menu {
           [
             {
               text: `Vendredi : ${this.nextDay(4, weekObj.week, weekObj.year)}`,
-              callback_data: "date5",
+              callback_data: "[]",
             },
           ],
           [
