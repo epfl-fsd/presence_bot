@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node presence_bot/index.js",
-    "dev": "nodemon presence_bot/index.js"
+    "dev": "nodemon --ext js index.js"
   },
   "repository": {
     "type": "git",
