@@ -98,21 +98,21 @@ class Menu {
   async sendWeekDays(weekObj, storage, ctx) {
     console.log("send week days", weekObj);
     console.log("-----------------");
+    console.dir(this.getWeekDays(weekObj, storage, ctx));
+    console.dir(this.getInlineWeekMenu(weekObj));
+    console.dir(Markup.inlineKeyboard(this.getInlineWeekMenu(weekObj)));
     let source = fs.createReadStream(await image.get(2022, 5, storage, ctx))
     // console.log(storage.obj[weekObj.year]);
     let startMainMenu = "Veuillez selectionner les jours souhaité";
     ctx.editMessageMedia(
       {
       type: 'photo',
-      media: {source}
+      media: {source},
+      caption: startMainMenu,
       },
       {
-      caption: 'TotoCaption',
       parse_mode: "HTML",
-        ...Markup.inlineKeyboard([
-          new Markup.button.callback("toto", "tutu"),
-          new Markup.button.callback("toto", "tutu")
-      ]),
+        ...Markup.inlineKeyboard(this.getWeekDays(weekObj, storage, ctx).reply_markup.inline_keyboard),
     });
   }
   getWeekDays(weekObj, storage, ctx) {
