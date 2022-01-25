@@ -1,4 +1,3 @@
-const storage = new (require("./Storage"))("./data.json");
 const xml2js = require("xml2js");
 var parseString = xml2js.parseString;
 var builder = new xml2js.Builder();
@@ -31,19 +30,14 @@ class Image {
     return imagePath;
   }
 
-  replaceIntermetiate(svgUserId, day, period) {
-    let fieldId = svgUserId;
-    this.replaceText();
-  }
-
-  async get(year, week, ctx) {
-    let imgPath = this.replaceIteration(year, week, ctx);
+  async get(year, week, storage, ctx) {
+    let imgPath = this.replaceIteration(year, week, storage, ctx);
     const inputFilePath = imgPath;
     const outputFilePath = await convertFile(inputFilePath);
     return outputFilePath;
   }
 
-  replaceIteration(year, week, ctx) {
+  replaceIteration(year, week, storage, ctx) {
     let weekArr = storage.getWeekData(year, week);
     let txtValuesArray = [];
     var i = 0;

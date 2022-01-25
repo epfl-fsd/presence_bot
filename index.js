@@ -16,7 +16,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.start(async (ctx) => {
   ctx.reply("Welcome my lovely friend");
   return ctx.replyWithPhoto({
-    source: fs.createReadStream(await image.get(2022, 5, ctx)),
+    source: fs.createReadStream(await image.get(2022, 5, storage, ctx)),
   });
 });
 
