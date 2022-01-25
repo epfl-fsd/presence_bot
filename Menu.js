@@ -214,7 +214,7 @@ class Menu {
             {
               text: "<--",
               callback_data: this.serialize({
-                action: "goToPage",
+                action: "goToPage", 
                 data: weekObj,
               }),
             },

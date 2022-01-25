@@ -5,13 +5,14 @@ class Storage {
     this.obj = this.load();
   }
 
-  //   update(year, week, day, period, value){
-  //     this.obj[year][week][day][period] = value
-  //     this.save()
-  //   }
+  getWeekData(year, week){
+    try {
+      return this.obj[year][week]
+    } catch (error) {
+      return undefined;
+    }
+  }
   getPresence(year, week, user, day, period) {
-    // !storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]
-
     if (!this.obj[year]) {
       this.obj[year] = {};
     }
