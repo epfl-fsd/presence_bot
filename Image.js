@@ -31,13 +31,13 @@ class Image {
   }
 
   async get(year, week, storage, ctx) {
-    let imgPath = this.replaceIteration(year, week, storage, ctx);
+    let imgPath = await this.replaceIteration(year, week, storage, ctx);
     const inputFilePath = imgPath;
     const outputFilePath = await convertFile(inputFilePath);
     return outputFilePath;
   }
 
-  replaceIteration(year, week, storage, ctx) {
+  async replaceIteration(year, week, storage, ctx) {
     let weekArr = storage.getWeekData(year, week);
     let txtValuesArray = [];
     var i = 0;
@@ -46,7 +46,7 @@ class Image {
       var tmpArr = JSON.parse(
         fs.readFileSync("./image/userSample.json").toString()
       ).arr;
-      tmpArr[0]._ = key;
+      tmpArr[0]._ = (await ctx.getChatMember(key)).user.username
       tmpArr[1]._ = value[0].am ? "✅" : "❌";
       tmpArr[2]._ = value[0].pm ? "✅" : "❌";
       tmpArr[3]._ = value[1].am ? "✅" : "❌";

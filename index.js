@@ -14,23 +14,23 @@ require("dotenv").config();
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 bot.start(async (ctx) => {
-  // ctx.reply("Welcome my lovely friend");
-  ctx.replyWithPhoto(
-    {
-      source: fs.createReadStream(await image.get(2022, 5, storage, ctx)),
-    },
-    {
-      caption: 'TotoCaption',
-      parse_mode: "HTML",
-        ...Markup.inlineKeyboard([
-          new Markup.button.callback("toto", "tutu"),
-          new Markup.button.callback("toto", "tutu")
-      ]),
-    }
-  )
+  ctx.reply("Welcome my lovely friend, please type /menu to get inline menu");
+  // ctx.replyWithPhoto(
+  //   {
+  //     source: fs.createReadStream(await image.get(2022, 5, storage, ctx)),
+  //   },
+  //   {
+  //     caption: 'TotoCaption',
+  //     parse_mode: "HTML",
+  //       ...Markup.inlineKeyboard([
+  //         new Markup.button.callback("toto", "tutu"),
+  //         new Markup.button.callback("toto", "tutu")
+  //     ]),
+  //   }
+  // )
 });
 
-bot.command("inline", (ctx) => {
+bot.command("menu", (ctx) => {
   return menu.sendMenu(ctx);
 });
 
