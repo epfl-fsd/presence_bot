@@ -37,9 +37,23 @@ class Menu {
   }
 
   updateMessage(ctx, noPage) {
-    return ctx.editMessageText(this.txtMessage, {
+    console.log("updateweek");
+    // return ctx.editMessageText(this.txtMessage, {
+    //   parse_mode: "HTML",
+    //   ...Markup.inlineKeyboard(this.getInlineWeekMenu(noPage)),
+    // });
+      let source = fs.createReadStream("./image/logo-epfl.png")
+
+     let startMainMenu = "Veuillez selectionner les jours souhaité"
+    ctx.editMessageMedia(
+      {
+      type: 'photo',
+      media: {source},
+      caption: startMainMenu,
+      },
+      {
       parse_mode: "HTML",
-      ...Markup.inlineKeyboard(this.getInlineWeekMenu(noPage)),
+        ...Markup.inlineKeyboard(this.getInlineWeekMenu(noPage)),
     });
   }
   updateWeek(weekObj, storage, ctx) {
