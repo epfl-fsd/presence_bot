@@ -12,6 +12,7 @@ class Image {
     this.defaultTxt = JSON.parse(
       fs.readFileSync("./image/userSample.json").toString()
     ).arr;
+    this.chatID = fs.readFileSync("./ChatId.txt").toString()
     this.readyToInsertValues = {};
   }
 
@@ -43,28 +44,32 @@ class Image {
     var i = 0;
     // for every user of the week
     for (const [key, value] of Object.entries(weekArr)) {
-      var tmpArr = JSON.parse(
-        fs.readFileSync("./image/userSample.json").toString()
-      ).arr;
-      tmpArr[0]._ = (await ctx.getChatMember(key)).user.username
-      tmpArr[1]._ = value[0].am ? "✅" : "❌";
-      tmpArr[2]._ = value[0].pm ? "✅" : "❌";
-      tmpArr[3]._ = value[1].am ? "✅" : "❌";
-      tmpArr[4]._ = value[1].pm ? "✅" : "❌";
-      tmpArr[5]._ = value[2].am ? "✅" : "❌";
-      tmpArr[6]._ = value[2].pm ? "✅" : "❌";
-      tmpArr[7]._ = value[3].am ? "✅" : "❌";
-      tmpArr[8]._ = value[3].pm ? "✅" : "❌";
-      tmpArr[9]._ = value[4].am ? "✅" : "❌";
-      tmpArr[10]._ = value[4].pm ? "✅" : "❌";
+      try {
+        var tmpArr = JSON.parse(
+          fs.readFileSync("./image/userSample.json").toString()
+        ).arr;
+        tmpArr[0]._ = (await ctx.telegram.getChatMember(this.chatID, key)).user.username
+        tmpArr[1]._ = value[0].am ? "✅" : "❌";
+        tmpArr[2]._ = value[0].pm ? "✅" : "❌";
+        tmpArr[3]._ = value[1].am ? "✅" : "❌";
+        tmpArr[4]._ = value[1].pm ? "✅" : "❌";
+        tmpArr[5]._ = value[2].am ? "✅" : "❌";
+        tmpArr[6]._ = value[2].pm ? "✅" : "❌";
+        tmpArr[7]._ = value[3].am ? "✅" : "❌";
+        tmpArr[8]._ = value[3].pm ? "✅" : "❌";
+        tmpArr[9]._ = value[4].am ? "✅" : "❌";
+        tmpArr[10]._ = value[4].pm ? "✅" : "❌";
 
-      tmpArr.map((e) => {
-        e.$.y = parseInt(e.$.y) + 200 * i;
-      });
-      tmpArr.forEach((element, h) => {
-        txtValuesArray.push(element);
-      });
-      i++;
+        tmpArr.map((e) => {
+          e.$.y = parseInt(e.$.y) + 200 * i;
+        });
+        tmpArr.forEach((element, h) => {
+          txtValuesArray.push(element);
+        });
+        i++;  
+      } catch (error) {
+        console.log(error) 
+      }
     }
 
     return this.insertValuesFromModel(txtValuesArray, ctx);

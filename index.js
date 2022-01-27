@@ -15,19 +15,6 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 
 bot.start(async (ctx) => {
   ctx.reply("Welcome my lovely friend, please type /menu to get inline menu");
-  // ctx.replyWithPhoto(
-  //   {
-  //     source: fs.createReadStream(await image.get(2022, 5, storage, ctx)),
-  //   },
-  //   {
-  //     caption: 'TotoCaption',
-  //     parse_mode: "HTML",
-  //       ...Markup.inlineKeyboard([
-  //         new Markup.button.callback("toto", "tutu"),
-  //         new Markup.button.callback("toto", "tutu")
-  //     ]),
-  //   }
-  // )
 });
 
 bot.command("menu", (ctx) => {
@@ -38,23 +25,26 @@ bot.on("callback_query", async (ctx) => {
   var callback_queryData = JSON.parse(ctx.update.callback_query.data);
   switch (callback_queryData.action) {
     case "goToPage":
-      menu.goToPage(callback_queryData.data, ctx);
+      try {
+        
+        menu.goToPage(callback_queryData.data, ctx);
+      } catch (error) {
+        
+      }
       break;
     case "goToWeek":
       var userId = ctx.update.callback_query.from.id;
       var data = callback_queryData.data;
-      // checkDays(storage, data, userId);
-      console.log(storage.obj[data[0]]);
-
-      menu.sendWeekDays(data, storage, ctx);
+      try {
+        menu.sendWeekDays(data, storage, ctx);
+        
+      } catch (error) {
+        
+      }
       break;
     case "togglePresence":
       var userId = ctx.update.callback_query.from.id;
       var data = callback_queryData.data;
-      // checkDays(storage, data, userId)
-      console.log(data);
-
-      // console.log("data2", storage.obj[data[0]][data[1]][userId]);
 
       let tmpWeekObj = {
         year: data[0],
@@ -78,47 +68,15 @@ bot.on("callback_query", async (ctx) => {
         data[3],
         presenceState
       );
-      menu.sendWeekDays(tmpWeekObj, storage, ctx);
+      try {
+        menu.sendWeekDays(tmpWeekObj, storage, ctx);
+      } catch (error) {
+      }
 
       break;
     default:
       break;
   }
 });
-
-function checkDays(storage, data, userId) {
-  storage.obj[data[0]] =
-    typeof storage.obj[data[0]] === "undefined" ? {} : storage.obj[data[0]];
-  storage.obj[data[0]][data[1]] =
-    typeof storage.obj[data[0]][data[1]] === "undefined"
-      ? {}
-      : storage.obj[data[0]][data[1]];
-  storage.obj[data[0]][data[1]][userId] =
-    typeof storage.obj[data[0]][data[1]][userId] === "undefined"
-      ? {}
-      : storage.obj[data[0]][data[1]][userId];
-  storage.obj[data[0]][data[1]][userId][data[2]] =
-    typeof storage.obj[data[0]][data[1]][userId][data[2]] === "undefined"
-      ? {}
-      : storage.obj[data[0]][data[1]][userId][data[2]];
-  if (
-    typeof storage.obj[data[0]][data[1]][userId][data[2]][data[3]] ===
-    "undefined"
-  ) {
-    storage.obj[data[0]][data[1]][userId][data[2]][data[3]] = true;
-  } else if (storage.obj[data[0]][data[1]][userId][data[2]][data[3]] === true) {
-    storage.obj[data[0]][data[1]][userId][data[2]][data[3]] = false;
-  } else if (
-    storage.obj[data[0]][data[1]][userId][data[2]][data[3]] === false
-  ) {
-    storage.obj[data[0]][data[1]][userId][data[2]][data[3]] = undefined;
-  }
-  storage.save();
-}
-
-// console.log(3/2);
-// console.log(Math.ceil(13/4));
-
-//lunch
 
 bot.launch();

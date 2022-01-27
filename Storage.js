@@ -33,7 +33,6 @@ class Storage {
   }
 
   setPresence(year, week, user, day, period, status) {
-    console.log(this);
     if (!this.obj[year]) {
       this.obj[year] = {};
     }

@@ -14,10 +14,6 @@ class Menu {
 
   sendMenu(ctx) {
     var weekObj = DateSemaines.getNew(4);
-    // return ctx.reply(this.txtMessage, {
-    //   parse_mode: "HTML",
-    //   ...Markup.inlineKeyboard(this.getInlineWeekMenu(weekObj)),
-    // });
     var weekObj = DateSemaines.getNew(4);
     return ctx.replyWithPhoto({
       source: fs.createReadStream("./image/logo-epfl.png"),
@@ -30,22 +26,20 @@ class Menu {
   }
 
   displayDays(ctx, weekNumber) {
+    // return "toto"
     return ctx.reply(this.txtMessage, {
       parse_mode: "HTML",
       ...Markup.inlineKeyboard(this.getInlineWeekMenu(weekNumber)),
     });
   }
 
-  updateMessage(ctx, noPage) {
-    console.log("updateweek");
-    // return ctx.editMessageText(this.txtMessage, {
-    //   parse_mode: "HTML",
-    //   ...Markup.inlineKeyboard(this.getInlineWeekMenu(noPage)),
-    // });
+  async updateMessage(ctx, noPage) {
+    // return "toto"
       let source = fs.createReadStream("./image/logo-epfl.png")
 
      let startMainMenu = "Veuillez selectionner les jours souhaité"
-    ctx.editMessageMedia(
+    try {
+      await ctx.editMessageMedia(
       {
       type: 'photo',
       media: {source},
@@ -55,8 +49,14 @@ class Menu {
       parse_mode: "HTML",
         ...Markup.inlineKeyboard(this.getInlineWeekMenu(noPage)),
     });
+    } catch (error) {
+      
+    }
+    
+
   }
   updateWeek(weekObj, storage, ctx) {
+    // return "toto"
       var replyValue = this.getWeekDays(weekObj, storage, ctx);
     return ctx.editMessageText(this.txtMessage, {
       parse_mode: "HTML",
@@ -67,7 +67,7 @@ class Menu {
   updateJours() {}
 
   goToPage(weekObj, ctx) {
-    console.debug("weekobj object: ", weekObj);
+    // return "toto"
     this.updateMessage(ctx, weekObj);
   }
 
@@ -110,24 +110,24 @@ class Menu {
   }
 
   async sendWeekDays(weekObj, storage, ctx) {
-    console.log("send week days", weekObj);
-    console.log("-----------------");
-    console.dir(this.getWeekDays(weekObj, storage, ctx));
-    console.dir(this.getInlineWeekMenu(weekObj));
-    console.dir(Markup.inlineKeyboard(this.getInlineWeekMenu(weekObj)));
-    let source = fs.createReadStream(await image.get(2022, 5, storage, ctx))
-    // console.log(storage.obj[weekObj.year]);
+    let source = fs.createReadStream(await image.get(weekObj.year, weekObj.week, storage, ctx))
     let startMainMenu = "Veuillez selectionner les jours souhaité";
-    ctx.editMessageMedia(
-      {
-      type: 'photo',
-      media: {source},
-      caption: startMainMenu,
-      },
-      {
-      parse_mode: "HTML",
-        ...Markup.inlineKeyboard(this.getWeekDays(weekObj, storage, ctx).reply_markup.inline_keyboard),
-    });
+    try {
+      await ctx.editMessageMedia(
+        {
+        type: 'photo',
+        media: {source},
+        caption: startMainMenu,
+        },
+        {
+        parse_mode: "HTML",
+          ...Markup.inlineKeyboard(this.getWeekDays(weekObj, storage, ctx).reply_markup.inline_keyboard),
+      });
+
+    } catch (error) {
+      
+    }
+    
   }
   getWeekDays(weekObj, storage, ctx) {
 
@@ -236,7 +236,6 @@ class Menu {
           [
             {
               text: `AM ${storage.getPresence(weekObj.year, weekObj.week, user, 4, "am") ? "✅" : "❌"}`,
-              // year, week, day, period, value
               callback_data: this.serialize({
                 action: "togglePresence",
                 data: [weekObj.year, weekObj.week, 4, "am"],
@@ -264,29 +263,6 @@ class Menu {
     };
   }
 
-  // getWeekDaysValues(weekObj, storage, ctx) {
-  //   var valueReturn = {};
-  //   for (let i = 0; i < 5; i++) {
-  //     if (
-  //       !storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]
-  //     ) {
-  //       valueReturn[i] = {};
-  //     } else {
-  //       valueReturn[i] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i];
-  //     }
-  //     try {
-  //       valueReturn[i]["am"] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["am"];
-  //     } catch (error) {
-  //       valueReturn[i]["am"] = false;
-  //     }
-  //     try {
-  //       valueReturn[i]["pm"] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["pm"];
-  //     } catch (error) {
-  //       valueReturn[i]["pm"] = false;
-  //     }
-  //   }
-  //   return valueReturn;
-  // }
   getDayAmPm() {}
 
   serialize(object) {
