@@ -16,7 +16,7 @@ class Menu {
     var weekObj = DateSemaines.getNew(4);
     var weekObj = DateSemaines.getNew(4);
     return ctx.replyWithPhoto({
-      source: fs.createReadStream("./image/logo-epfl.png"),
+      source: fs.createReadStream("./image/banniereAccueil.png"),
     },
     {
       caption: this.txtMessage,
@@ -35,9 +35,9 @@ class Menu {
 
   async updateMessage(ctx, noPage) {
     // return "toto"
-      let source = fs.createReadStream("./image/logo-epfl.png")
+      let source = fs.createReadStream("./image/banniereAccueil.png")
 
-     let startMainMenu = "Veuillez selectionner les jours souhaité"
+     let startMainMenu = ""
     try {
       await ctx.editMessageMedia(
       {
@@ -111,7 +111,7 @@ class Menu {
 
   async sendWeekDays(weekObj, storage, ctx) {
     let source = fs.createReadStream(await image.get(weekObj.year, weekObj.week, storage, ctx))
-    let startMainMenu = "Veuillez selectionner les jours souhaité";
+    let startMainMenu = "";
     try {
       await ctx.editMessageMedia(
         {
