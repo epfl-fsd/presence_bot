@@ -1,10 +1,14 @@
 version: "3.3"  # optional since v1.27.0
 services:
   botpresence:
-    image: botpresence:latest
-    container_name: Botpresence
+    # image: botpresence:latest
     build: .
+    container_name: Botpresence
     ports:
       - "5000:5000"
     volumes:
       - .:/botpresence
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+    cap_add:
+      - SYS_ADMIN
