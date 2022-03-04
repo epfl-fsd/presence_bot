@@ -111,7 +111,10 @@ libgbm1 \
 fonts-noto-color-emoji \ 
 -y
 
-#Run the bot
-CMD ["npm","run","dev"]
+# Create user to avoid some nodejs issues
+RUN useradd presencebot --create-home
+USER presencebot
+RUN ls /home/presencebot 
 
-#RUN apt-get update && apt-get install -y --no-install-recommends gnupg dirmngr && rm -rf /var/lib/apt/lists/* 
+#Run the bot
+CMD ["npm", "run", "dev"]
