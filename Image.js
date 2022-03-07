@@ -39,7 +39,7 @@ class Image {
   }
 
   async replaceIteration(year, week, storage, ctx) {
-    let weekArr = storage.getWeekData(year, week);
+    let weekArr = storage.getWeekData(year, week, ctx.update.callback_query.from.id);
     let txtValuesArray = [];
     var i = 0;
     // for every user of the week
