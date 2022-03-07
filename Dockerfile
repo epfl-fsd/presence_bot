@@ -12,9 +12,9 @@ RUN apt install -y nodejs
 #Create a folder and create directory  
 RUN mkdir /botpresence 
 WORKDIR /botpresence
-COPY ./package.json .
-COPY ./package-lock.json .
-RUN npm install 
+# COPY ./package.json .
+# COPY ./package-lock.json .
+# RUN npm install 
 
 RUN apt-get install ca-certificates \
 fonts-liberation \
