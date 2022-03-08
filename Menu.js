@@ -110,7 +110,9 @@ class Menu {
   }
 
   async sendWeekDays(weekObj, storage, ctx) {
-    let source = fs.createReadStream(await image.get(weekObj.year, weekObj.week, storage, ctx))
+    let imagePath = await image.get(weekObj.year, weekObj.week, storage, ctx)
+    let source = fs.createReadStream(imagePath)
+    fs.rm(imagePath, (err)=>console.log(err))
     let startMainMenu = "";
     try {
       await ctx.editMessageMedia(

@@ -13,9 +13,6 @@ class Image {
       fs.readFileSync("./image/userSample.json").toString()
     ).arr;
     this.readyToInsertValues = {};
-    if (!fs.existsSync('./image/generated')) {
-      fs.mkdirSync('./image/generated')
-    }
   }
 
   insertValuesFromModel(values, ctx) {
@@ -28,6 +25,9 @@ class Image {
     let imagePath = `./image/generated/${randomID}.svg`;
     parseString(fs.readFileSync(this.input).toString(), function (err, result) {
       result.svg.g[0].text = values;
+      if (!fs.existsSync('./image/generated')) {
+        fs.mkdirSync('./image/generated')
+      }
       fs.writeFileSync(imagePath, builder.buildObject(result));
     });
     return imagePath;
@@ -37,6 +37,7 @@ class Image {
     let imgPath = await this.replaceIteration(year, week, storage, ctx);
     const inputFilePath = imgPath;
     const outputFilePath = await convertFile(inputFilePath);
+    fs.rm(inputFilePath, (err)=>console.log(err))
     return outputFilePath;
   }
 
