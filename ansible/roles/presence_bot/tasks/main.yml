@@ -1,0 +1,23 @@
+---
+- name: ensure presence_bot repository is present
+  git:
+    repo: 'https://github.com/epfl-fsd/presence_bot'
+    dest: /srv/presence_bot
+    version: "{{ git_current_branch }}"
+    force: yes
+
+- name: Copy secrets from keybase
+  copy:
+    src: /keybase/team/epfl_presencebot/.env
+    dest: /srv/presence_bot/.env
+
+- name: Start docker container presence_bot
+  docker_compose:
+    project_src: /srv/presence_bot
+    state: present
+    build: yes
+    recreate: always
+    nocache: yes
+    pull: yes
+    files:
+      - docker-compose-prod.yml

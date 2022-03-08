@@ -111,10 +111,6 @@ libgbm1 \
 fonts-noto-color-emoji \ 
 -y
 
-# Create user to avoid some nodejs issues
-RUN useradd presencebot --create-home
-USER presencebot
-RUN ls /home/presencebot 
 
 #Run the bot
 CMD ["npm", "start"]

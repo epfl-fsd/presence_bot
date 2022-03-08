@@ -1,0 +1,6 @@
+- name: presence_bot
+  hosts: all
+  roles:
+    - name: ../roles/presence_bot
+  tags:
+    - presence_bot

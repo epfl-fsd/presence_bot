@@ -4,7 +4,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-prod
-    container_name: Botpresence-prod
     ports:
       - "5000:5000"
     volumes:
