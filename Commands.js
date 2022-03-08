@@ -28,6 +28,7 @@ module.exports = class Commands {
         (new (require("./Menu"))("")).sendMenu(ctx);
     }
     setgroupid(ctx, args){
+        return ctx.reply(`Group ID already defined`)
         let argChatId = args[1]
         let ctxChatId = ctx.update.message.chat.id
         if (argChatId == undefined) {
