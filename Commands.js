@@ -31,7 +31,6 @@ module.exports = class Commands {
         let argChatId = args[1]
         let ctxChatId = ctx.update.message.chat.id
         if (argChatId == undefined) {
-            console.log(ctxChatId);
             fs.writeFileSync("ChatId.txt", ctxChatId.toString())
             ctx.reply(`Group ID Successfully set to ${ctxChatId}`)
         } else {

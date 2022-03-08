@@ -37,7 +37,7 @@ class Image {
     let imgPath = await this.replaceIteration(year, week, storage, ctx);
     const inputFilePath = imgPath;
     const outputFilePath = await convertFile(inputFilePath);
-    fs.rm(inputFilePath, (err)=>console.log(err))
+    fs.rm(inputFilePath, (err)=>{})
     return outputFilePath;
   }
 
