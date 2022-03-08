@@ -7,7 +7,7 @@ module.exports = class Commands {
         var propertyNames = Object.getOwnPropertyNames(Commands.prototype);
         propertyNames.shift()
         propertyNames.forEach(element => {
-            bot.command(element, (ctx) => {
+            bot.command(element, async (ctx) => {
                 if (!fs.existsSync("ChatId.txt") && element != "setgroupid") {
                     return ctx.reply('Chat undefined, please choose the chat using /setgroupid')
                 }
@@ -21,10 +21,12 @@ module.exports = class Commands {
         ctx.reply("Welcome my lovely friend, please type /menu to get inline menu");
     }
     
-    menu(ctx){
+    async menu(ctx){
+        if (ctx.update.message.chat.id.toString()[0] === '-') {
+            return ctx.reply(`You can't do this command in groups, please use /menu in private conversation to the bot: t.me/${(await ctx.telegram.getMe()).username}`)
+        }
         (new (require("./Menu"))("")).sendMenu(ctx);
     }
-
     setgroupid(ctx, args){
         let argChatId = args[1]
         let ctxChatId = ctx.update.message.chat.id
