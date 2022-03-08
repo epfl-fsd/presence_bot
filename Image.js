@@ -12,7 +12,6 @@ class Image {
     this.defaultTxt = JSON.parse(
       fs.readFileSync("./image/userSample.json").toString()
     ).arr;
-    this.chatID = fs.readFileSync("./ChatId.txt").toString()
     this.readyToInsertValues = {};
   }
 
@@ -48,7 +47,7 @@ class Image {
         var tmpArr = JSON.parse(
           fs.readFileSync("./image/userSample.json").toString()
         ).arr;
-        tmpArr[0]._ = (await ctx.telegram.getChatMember(this.chatID, key)).user.username
+        tmpArr[0]._ = (await ctx.telegram.getChatMember(fs.readFileSync("./ChatId.txt").toString(), key)).user.username
         tmpArr[1]._ = value[0].am ? "✅" : "❌";
         tmpArr[2]._ = value[0].pm ? "✅" : "❌";
         tmpArr[3]._ = value[1].am ? "✅" : "❌";
