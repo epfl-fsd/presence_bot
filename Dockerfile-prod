@@ -1,0 +1,120 @@
+FROM ubuntu:20.04
+RUN echo 91.189.88.152 archive.ubuntu.com >>/etc/hosts
+ARG DEBIAN_FRONTEND=noninteractive 
+RUN apt-get update -y
+
+#IntallS npm and nodejs
+RUN apt install -y curl 
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt install -y nodejs 
+
+
+#Create a folder and create directory  
+RUN mkdir /botpresence 
+WORKDIR /botpresence
+# COPY ./package.json .
+# COPY ./package-lock.json .
+# RUN npm install 
+
+RUN apt-get install ca-certificates \
+fonts-liberation \
+libappindicator3-1 \
+libasound2 \
+libatk-bridge2.0-0 \
+libatk1.0-0 \
+libc6 \
+libcairo2 \
+libcups2 \
+libdbus-1-3 \
+libexpat1 \
+libfontconfig1 \
+libgbm1 \
+libgcc1 \
+libglib2.0-0 \
+libgtk-3-0 \
+libnspr4 \
+libnss3 \
+libpango-1.0-0 \
+libpangocairo-1.0-0 \
+libstdc++6 \
+libx11-6 \
+libx11-xcb1 \
+libxcb1 \
+libxcomposite1 \
+libxcursor1 \
+libxdamage1 \
+libxext6 \
+libxfixes3 \
+libxi6 \
+libxrandr2 \
+libxrender1 \
+libxss1 \
+libxtst6 \
+lsb-release \
+wget \
+xdg-utils \
+gconf-service \
+libasound2 \
+libatk1.0-0 \
+libatk-bridge2.0-0 \
+libc6 \
+libcairo2 \
+libcups2 \
+libdbus-1-3 \
+libexpat1 \
+libfontconfig1 \
+libgcc1 \
+libgconf-2-4 \
+libgdk-pixbuf2.0-0 \
+libglib2.0-0 \
+libgtk-3-0 \
+libnspr4 \
+libpango-1.0-0 \
+libpangocairo-1.0-0 \
+libstdc++6 \
+libx11-6 \
+libx11-xcb1 \
+libxcb1 \
+libxcomposite1 \
+libxcursor1 \
+libxdamage1 \
+libxext6 \
+libxfixes3 \
+libxi6 \
+libxrandr2 \
+libxrender1 \
+libxss1 \
+libxtst6 \
+ca-certificates \
+fonts-liberation \
+libappindicator1 \
+libnss3 \
+lsb-release \
+xdg-utils \
+wget \
+libx11-xcb1 \
+libxcomposite1 \
+libxcursor1 \
+libxdamage1 \
+libxi-dev \
+libxtst-dev \
+libnss3 \
+libcups2 \
+libxss1 \
+libxrandr2 \
+libasound2 \
+libatk1.0-0 \
+libatk-bridge2.0-0 \
+libpangocairo-1.0-0 \
+libgtk-3-0 \
+libgbm1 \
+fonts-noto-color-emoji \ 
+-y
+
+# Create user to avoid some nodejs issues
+RUN useradd presencebot --create-home
+USER presencebot
+RUN ls /home/presencebot 
+
+#Run the bot
+CMD ["npm", "start"]

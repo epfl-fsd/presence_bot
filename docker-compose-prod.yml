@@ -1,0 +1,15 @@
+version: "3.3"  # optional since v1.27.0
+services:
+  botpresence:
+    build:
+      context: .
+      dockerfile: Dockerfile-prod
+    container_name: Botpresence-prod
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/botpresence
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+    cap_add:
+      - SYS_ADMIN

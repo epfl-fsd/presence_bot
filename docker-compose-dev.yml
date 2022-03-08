@@ -1,9 +1,10 @@
 version: "3.3"  # optional since v1.27.0
 services:
   botpresence:
-    # image: botpresence:latest
-    build: .
-    container_name: Botpresence
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    container_name: Botpresence-dev
     ports:
       - "5000:5000"
     volumes:
