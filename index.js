@@ -5,28 +5,20 @@ const Menu = require("./Menu");
 const image = new (require("./Image"))("./image/template.svg", "");
 const storage = new (require("./Storage"))("./data.json");
 
-var menu = new Menu(
-  "Bienvenue, veuillez indiquer votre présence physique de l'epfl"
-);
+var menu = new Menu("");
 
 require("dotenv").config();
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
+new(require('./Commands'))(bot)
 
-bot.start(async (ctx) => {
-  ctx.reply("Welcome my lovely friend, please type /menu to get inline menu");
-});
 
-bot.command("menu", (ctx) => {
-  return menu.sendMenu(ctx);
-});
 
 bot.on("callback_query", async (ctx) => {
   var callback_queryData = JSON.parse(ctx.update.callback_query.data);
   switch (callback_queryData.action) {
     case "goToPage":
       try {
-        
         menu.goToPage(callback_queryData.data, ctx);
       } catch (error) {
         
