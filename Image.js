@@ -13,6 +13,9 @@ class Image {
       fs.readFileSync("./image/userSample.json").toString()
     ).arr;
     this.readyToInsertValues = {};
+    if (!fs.existsSync('./image/generated')) {
+      fs.mkdirSync('./image/generated')
+    }
   }
 
   insertValuesFromModel(values, ctx) {
