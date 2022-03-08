@@ -87,6 +87,46 @@
         "x": "960.000",
         "y": "325"
             }
+        },
+        {
+            "_": "Lundi",
+            "$": {
+                "style": "white-space: pre; fill: rgb(0,0,0); font-family: Arial, sans-serif; font-size: 30.1px;",
+                "x": "390.000",
+                "y": "200"
+            }
+        },
+        {
+            "_": "Mardi",
+            "$": {
+                "style": "white-space: pre; fill: rgb(0,0,0); font-family: Arial, sans-serif; font-size: 30.1px;",
+                "x": "530.000",
+                "y": "200"
+            }
+        },
+        {
+            "_": "Mercredi",
+            "$": {
+                "style": "white-space: pre; fill: rgb(0,0,0); font-family: Arial, sans-serif; font-size: 30.1px;",
+                "x": "655.000",
+                "y": "200"
+            }
+        },
+        {
+            "_": "Jeudi",
+            "$": {
+                "style": "white-space: pre; fill: rgb(0,0,0); font-family: Arial, sans-serif; font-size: 30.1px;",
+                "x": "810.000",
+                "y": "200"
+            }
+        },
+        {
+            "_": "Vendredi",
+            "$": {
+                "style": "white-space: pre; fill: rgb(0,0,0); font-family: Arial, sans-serif; font-size: 30.1px;",
+                "x": "935.000",
+                "y": "200"
+            }
         }
     ]
 }
