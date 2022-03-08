@@ -1,3 +1,10 @@
+- name: File system
+  hosts: all
+  roles:
+    - name: ../roles/filesystem
+  tags:
+    - filesystem
+
 - name: presence_bot
   hosts: all
   roles:

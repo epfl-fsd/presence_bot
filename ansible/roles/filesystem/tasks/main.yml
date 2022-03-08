@@ -1,0 +1,6 @@
+- name: Add the user 'presencebot'
+  ansible.builtin.user:
+    name: presencebot
+    comment: Presence bot
+    # uid: 1040
+    # group: admin

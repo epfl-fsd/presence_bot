@@ -11,11 +11,20 @@
     src: /keybase/team/epfl_presencebot/.env
     dest: /srv/presence_bot/.env
 
+- name: Recursively change ownership of a directory
+  ansible.builtin.file:
+    path: /srv/presence_bot
+    state: directory
+    recurse: yes
+    owner: presencebot
+    group: presencebot
+    mode: 775
+
 - name: Start docker container presence_bot
   docker_compose:
     project_src: /srv/presence_bot
     state: present
-    build: yes
+    # build: yes
     recreate: always
     nocache: yes
     pull: yes
