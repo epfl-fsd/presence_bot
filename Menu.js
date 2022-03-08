@@ -1,6 +1,10 @@
 const { load } = require("nodemon/lib/config");
 const { Markup } = require("telegraf");
 const DateSemaines = require("./DateSemaines");
+const fs = require("fs");
+const storage = new (require("./Storage"))("./data.json");
+const image = new (require("./Image"))("./image/template.svg", "");
+
 
 class Menu {
   constructor(txtMessage) {
@@ -10,26 +14,49 @@ class Menu {
 
   sendMenu(ctx) {
     var weekObj = DateSemaines.getNew(4);
-    return ctx.reply(this.txtMessage, {
+    var weekObj = DateSemaines.getNew(4);
+    return ctx.replyWithPhoto({
+      source: fs.createReadStream("./image/banniereAccueil.png"),
+    },
+    {
+      caption: this.txtMessage,
       parse_mode: "HTML",
-      ...Markup.inlineKeyboard(this.getInlineWeekMenu(weekObj)),
+        ...Markup.inlineKeyboard(this.getInlineWeekMenu(weekObj)),
     });
   }
 
   displayDays(ctx, weekNumber) {
+    // return "toto"
     return ctx.reply(this.txtMessage, {
       parse_mode: "HTML",
       ...Markup.inlineKeyboard(this.getInlineWeekMenu(weekNumber)),
     });
   }
 
-  updateMessage(ctx, noPage) {
-    return ctx.editMessageText(this.txtMessage, {
+  async updateMessage(ctx, noPage) {
+    // return "toto"
+      let source = fs.createReadStream("./image/banniereAccueil.png")
+
+     let startMainMenu = ""
+    try {
+      await ctx.editMessageMedia(
+      {
+      type: 'photo',
+      media: {source},
+      caption: startMainMenu,
+      },
+      {
       parse_mode: "HTML",
-      ...Markup.inlineKeyboard(this.getInlineWeekMenu(noPage)),
+        ...Markup.inlineKeyboard(this.getInlineWeekMenu(noPage)),
     });
+    } catch (error) {
+      
+    }
+    
+
   }
   updateWeek(weekObj, storage, ctx) {
+    // return "toto"
       var replyValue = this.getWeekDays(weekObj, storage, ctx);
     return ctx.editMessageText(this.txtMessage, {
       parse_mode: "HTML",
@@ -40,7 +67,7 @@ class Menu {
   updateJours() {}
 
   goToPage(weekObj, ctx) {
-    console.debug("weekobj object: ", weekObj);
+    // return "toto"
     this.updateMessage(ctx, weekObj);
   }
 
@@ -82,12 +109,25 @@ class Menu {
     return finalArray;
   }
 
-  sendWeekDays(weekObj, storage, ctx) {
-    console.log("send week days", weekObj);
-    console.log("-----------------");
-    // console.log(storage.obj[weekObj.year]);
-    let startMainMenu = "Veuillez selectionner les jours souhaité";
-    ctx.editMessageText(startMainMenu, this.getWeekDays(weekObj, storage, ctx));
+  async sendWeekDays(weekObj, storage, ctx) {
+    let source = fs.createReadStream(await image.get(weekObj.year, weekObj.week, storage, ctx))
+    let startMainMenu = "";
+    try {
+      await ctx.editMessageMedia(
+        {
+        type: 'photo',
+        media: {source},
+        caption: startMainMenu,
+        },
+        {
+        parse_mode: "HTML",
+          ...Markup.inlineKeyboard(this.getWeekDays(weekObj, storage, ctx).reply_markup.inline_keyboard),
+      });
+
+    } catch (error) {
+      
+    }
+    
   }
   getWeekDays(weekObj, storage, ctx) {
 
@@ -99,7 +139,7 @@ class Menu {
           [
             {
               text: `Lundi : ${this.nextDay(0, weekObj.week, weekObj.year)}`,
-              callback_data: "date1",
+              callback_data: "[]",
             },
           ],
           [
@@ -121,7 +161,7 @@ class Menu {
           [
             {
               text: `Mardi : ${this.nextDay(1, weekObj.week, weekObj.year)}`,
-              callback_data: "date2",
+              callback_data: "[]",
             },
           ],
           [
@@ -144,7 +184,7 @@ class Menu {
           [
             {
               text: `Mercredi : ${this.nextDay(2, weekObj.week, weekObj.year)}`,
-              callback_data: "date3",
+              callback_data: "[]",
             },
           ],
           [
@@ -167,7 +207,7 @@ class Menu {
           [
             {
               text: `Jeudi : ${this.nextDay(3, weekObj.week, weekObj.year)}`,
-              callback_data: "date4",
+              callback_data: "[]",
             },
           ],
           [
@@ -190,13 +230,12 @@ class Menu {
           [
             {
               text: `Vendredi : ${this.nextDay(4, weekObj.week, weekObj.year)}`,
-              callback_data: "date5",
+              callback_data: "[]",
             },
           ],
           [
             {
               text: `AM ${storage.getPresence(weekObj.year, weekObj.week, user, 4, "am") ? "✅" : "❌"}`,
-              // year, week, day, period, value
               callback_data: this.serialize({
                 action: "togglePresence",
                 data: [weekObj.year, weekObj.week, 4, "am"],
@@ -224,29 +263,6 @@ class Menu {
     };
   }
 
-  // getWeekDaysValues(weekObj, storage, ctx) {
-  //   var valueReturn = {};
-  //   for (let i = 0; i < 5; i++) {
-  //     if (
-  //       !storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]
-  //     ) {
-  //       valueReturn[i] = {};
-  //     } else {
-  //       valueReturn[i] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i];
-  //     }
-  //     try {
-  //       valueReturn[i]["am"] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["am"];
-  //     } catch (error) {
-  //       valueReturn[i]["am"] = false;
-  //     }
-  //     try {
-  //       valueReturn[i]["pm"] = storage.obj[weekObj.year][weekObj.week][ctx.update.callback_query.from.id][i]["pm"];
-  //     } catch (error) {
-  //       valueReturn[i]["pm"] = false;
-  //     }
-  //   }
-  //   return valueReturn;
-  // }
   getDayAmPm() {}
 
   serialize(object) {

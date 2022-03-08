@@ -5,10 +5,17 @@ class Storage {
     this.obj = this.load();
   }
 
-  getWeekData(year, week){
+  getWeekData(year, week, user){
     try {
+      if (this.obj[year] == undefined || this.obj[year][week] == undefined) {
+        for (let i = 0; i < 5; i++) {
+          this.getPresence(year, week, user, i, "am")  
+          this.getPresence(year, week, user, i, "pm")  
+        }
+      } 
       return this.obj[year][week]
     } catch (error) {
+      console.log(error);
       return undefined;
     }
   }
@@ -33,7 +40,6 @@ class Storage {
   }
 
   setPresence(year, week, user, day, period, status) {
-    console.log(this);
     if (!this.obj[year]) {
       this.obj[year] = {};
     }
