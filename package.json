@@ -13,6 +13,13 @@
     "url": "git+ssh://git@github.com/epfl-idevfsd/presence_bot.git"
   },
   "author": "Pyrosaphire, D4rkHeart",
+  "contributors": [
+    {
+      "name": "Nicolas Borboën",
+      "email": "ponsfrilus@gmail.com",
+      "url": "https://github.com/ponsfrilus"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/epfl-idevfsd/presence_bot/issues"
