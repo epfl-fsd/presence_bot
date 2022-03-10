@@ -101,8 +101,8 @@ class Menu {
       data: DateSemaines.nextPage(weekObj),
     });
 
-    var previousButton = Markup.button.callback("Previous", previousData);
-    var nextButton = Markup.button.callback("Next", nextData);
+    var previousButton = Markup.button.callback("Semaines précédentes", previousData);
+    var nextButton = Markup.button.callback("Semaines suivantes", nextData);
     navbarArray.push(previousButton);
     navbarArray.push(nextButton);
     finalArray.push(navbarArray);
@@ -144,14 +144,14 @@ class Menu {
           ],
           [
             {
-              text: `AM ${storage.getPresence(weekObj.year, weekObj.week, user, 0, "am") ? "✅" : "❌"}`,
+              text: `Matin ${storage.getPresence(weekObj.year, weekObj.week, user, 0, "am") ? "✅" : "❌"}`,
               callback_data: this.serialize({
                 action: "togglePresence",
                 data: [weekObj.year, weekObj.week, 0, "am"],
               }),
             },
             {
-              text: `PM ${storage.getPresence(weekObj.year, weekObj.week, user, 0, "pm") ? "✅" : "❌"}`,
+              text: `Après-midi ${storage.getPresence(weekObj.year, weekObj.week, user, 0, "pm") ? "✅" : "❌"}`,
               callback_data: this.serialize({
                 action: "togglePresence",
                 data: [weekObj.year, weekObj.week, 0, "pm"],
@@ -166,7 +166,7 @@ class Menu {
           ],
           [
             {
-              text: `AM ${storage.getPresence(weekObj.year, weekObj.week, user, 1, "am") ? "✅" : "❌"}`,
+              text: `Matin ${storage.getPresence(weekObj.year, weekObj.week, user, 1, "am") ? "✅" : "❌"}`,
               // year, week, day, period, value
               callback_data: this.serialize({
                 action: "togglePresence",
@@ -174,7 +174,7 @@ class Menu {
               }),
             },
             {
-              text: `PM ${storage.getPresence(weekObj.year, weekObj.week, user, 1, "pm") ? "✅" : "❌"}`,
+              text: `Après-midi ${storage.getPresence(weekObj.year, weekObj.week, user, 1, "pm") ? "✅" : "❌"}`,
               callback_data: this.serialize({
                 action: "togglePresence",
                 data: [weekObj.year, weekObj.week, 1, "pm"],
@@ -189,7 +189,7 @@ class Menu {
           ],
           [
             {
-              text: `AM ${storage.getPresence(weekObj.year, weekObj.week, user, 2, "am") ? "✅" : "❌"}`,
+              text: `Matin ${storage.getPresence(weekObj.year, weekObj.week, user, 2, "am") ? "✅" : "❌"}`,
               // year, week, day, period, value
               callback_data: this.serialize({
                 action: "togglePresence",
@@ -197,7 +197,7 @@ class Menu {
               }),
             },
             {
-              text: `PM ${storage.getPresence(weekObj.year, weekObj.week, user, 2, "pm") ? "✅" : "❌"}`,
+              text: `Après-midi ${storage.getPresence(weekObj.year, weekObj.week, user, 2, "pm") ? "✅" : "❌"}`,
               callback_data: this.serialize({
                 action: "togglePresence",
                 data: [weekObj.year, weekObj.week, 2, "pm"],
@@ -212,7 +212,7 @@ class Menu {
           ],
           [
             {
-              text: `AM ${storage.getPresence(weekObj.year, weekObj.week, user, 3, "am") ? "✅" : "❌"}`,
+              text: `Matin ${storage.getPresence(weekObj.year, weekObj.week, user, 3, "am") ? "✅" : "❌"}`,
               // year, week, day, period, value
               callback_data: this.serialize({
                 action: "togglePresence",
@@ -220,7 +220,7 @@ class Menu {
               }),
             },
             {
-              text: `PM ${storage.getPresence(weekObj.year, weekObj.week, user, 3, "pm") ? "✅" : "❌"}`,
+              text: `Après-midi ${storage.getPresence(weekObj.year, weekObj.week, user, 3, "pm") ? "✅" : "❌"}`,
               callback_data: this.serialize({
                 action: "togglePresence",
                 data: [weekObj.year, weekObj.week, 3, "pm"],
@@ -235,14 +235,14 @@ class Menu {
           ],
           [
             {
-              text: `AM ${storage.getPresence(weekObj.year, weekObj.week, user, 4, "am") ? "✅" : "❌"}`,
+              text: `Matin ${storage.getPresence(weekObj.year, weekObj.week, user, 4, "am") ? "✅" : "❌"}`,
               callback_data: this.serialize({
                 action: "togglePresence",
                 data: [weekObj.year, weekObj.week, 4, "am"],
               }),
             },
             {
-              text: `PM ${storage.getPresence(weekObj.year, weekObj.week, user, 4, "pm") ? "✅" : "❌"}`,
+              text: `Après-midi ${storage.getPresence(weekObj.year, weekObj.week, user, 4, "pm") ? "✅" : "❌"}`,
               callback_data: this.serialize({
                 action: "togglePresence",
                 data: [weekObj.year, weekObj.week, 4, "pm"],
@@ -251,7 +251,7 @@ class Menu {
           ],
           [
             {
-              text: "<--",
+              text: "← retour au menu",
               callback_data: this.serialize({
                 action: "goToPage", 
                 data: weekObj,
