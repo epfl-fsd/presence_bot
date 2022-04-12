@@ -66,7 +66,7 @@ class Storage {
     }
   }
   save() {
-    fs.writeFileSync(this.filePath, JSON.stringify(this.obj));
+    fs.writeFileSync(this.filePath, JSON.stringify(this.obj, null, 2));
   }
   fileExists() {
     return fs.existsSync(this.filePath) ? true : false;

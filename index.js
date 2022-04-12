@@ -1,12 +1,11 @@
-const { Telegraf } = require("telegraf");
-const { Markup } = require("telegraf");
+const { Telegraf, Markup } = require("telegraf");
 const fs = require("fs");
 const Menu = require("./Menu");
 const image = new (require("./Image"))("./image/template.svg", "");
 const storage = new (require("./Storage"))("./data.json");
 
 var menu = new Menu(
-  "Bienvenue, veuillez indiquer votre présence physique de l'epfl"
+  "Bienvenue, veuillez indiquer votre présence physique à l'EPFL"
 );
 
 require("dotenv").config();
@@ -14,7 +13,7 @@ require("dotenv").config();
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 bot.start(async (ctx) => {
-  ctx.reply("Welcome my lovely friend, please type /menu to get inline menu");
+  ctx.reply("Bienvenue, utilisez la commande /menu pour afficher le menu");
 });
 
 bot.command("menu", (ctx) => {

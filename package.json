@@ -13,6 +13,13 @@
     "url": "git+ssh://git@github.com/epfl-idevfsd/presence_bot.git"
   },
   "author": "Pyrosaphire, D4rkHeart",
+  "contributors": [
+    {
+      "name": "Nicolas Borboën",
+      "email": "ponsfrilus@gmail.com",
+      "url": "https://github.com/ponsfrilus"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/epfl-idevfsd/presence_bot/issues"
@@ -21,7 +28,6 @@
   "dependencies": {
     "convert-svg-to-jpeg": "^0.5.0",
     "dotenv": "^10.0.0",
-    "node-telegram-bot-api": "^0.54.0",
     "nodemon": "^2.0.14",
     "randomstring": "^1.2.2",
     "telegraf": "^4.4.2",
